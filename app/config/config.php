@@ -46,7 +46,7 @@ if (empty($app) === true) {
 $app->path(__DIR__ . $ds . '..' . $ds . '..');
 
 // Core config variables
-$app->set('flight.base_url', '/',);           // Base URL for your app. Change if app is in a subdirectory (e.g., '/myapp/')
+//$app->set('flight.base_url', '/',);           // Base URL for your app. Change if app is in a subdirectory (e.g., '/myapp/')
 $app->set('flight.case_sensitive', false);    // Set true for case sensitive routes. Default: false
 $app->set('flight.log_errors', true);         // Log errors to file. Recommended: true in production
 $app->set('flight.handle_errors', false);     // Let Tracy handle errors if false. Set true to use Flight's error handler
@@ -59,9 +59,8 @@ $nonce = base64_encode(random_bytes(16)); // Base64 is recommended over hex for 
 $app->set('csp_nonce', $nonce);
 
 // Send the header to the browser
-$app->response()->header("Content-Security-Policy", "script-src 'self' 'nonce-$nonce'; object-src 'none';");
-
-/**********************************************
+// Modifiez cette ligne dans votre config.php
+$app->response()->header("Content-Security-Policy", "default-src 'self'; script-src 'self' 'nonce-$nonce' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; font-src 'self' https://cdnjs.cloudflare.com; object-src 'none';");/**********************************************
  *           User Configuration               *
  **********************************************/
 return [

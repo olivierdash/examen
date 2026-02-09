@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ajouter un nouvel objet | Vitrine</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" nonce="<?= Flight::get('csp_nonce') ?>" href="<?= BASE_URL ?>/styles.css">
+    <link nonce="<?= Flight::get('csp_nonce') ?>" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link nonce="<?= Flight::get('csp_nonce') ?>" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link nonce="<?= Flight::get('csp_nonce') ?>" rel="stylesheet" href="<?= BASE_URL ?>assets/css/style.css">
 </head>
 <body>
 
@@ -58,7 +58,7 @@
 
                         <div class="mb-5">
                             <label class="form-label">Photos de l'objet</label>
-                            <div class="upload-area" onclick="document.getElementById('photos').click()">
+                            <div class="upload-area" id="drop-zone">
                                 <i class="fa-solid fa-cloud-arrow-up fa-3x text-primary mb-3"></i>
                                 <h5>Cliquez ou glissez vos photos ici</h5>
                                 <p class="small text-muted">Format JPG ou PNG (Max. 5 Mo par photo)</p>
@@ -82,6 +82,6 @@
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script nonce="<?= Flight::get('csp_nonce') ?>" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
