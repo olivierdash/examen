@@ -14,7 +14,7 @@ $router->group('', function(Router $router) use ($app) {
     
     // GET home page - display all products
     $router->get('/', function() use ($app) {
-        
+        $app->render('obj/add', ['title' => 'Accueil']);
     });
 
     // POST insert/update product

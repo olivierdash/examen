@@ -55,8 +55,11 @@ $app->set('flight.views.extension', '.php');  // View file extension (e.g., '.ph
 $app->set('flight.content_length', false);    // Send content length header. Usually false unless required by proxy
 
 // Generate a CSP nonce for each request and store in $app
-$nonce = bin2hex(random_bytes(16));
+$nonce = base64_encode(random_bytes(16)); // Base64 is recommended over hex for nonces
 $app->set('csp_nonce', $nonce);
+
+// Send the header to the browser
+$app->response()->header("Content-Security-Policy", "script-src 'self' 'nonce-$nonce'; object-src 'none';");
 
 /**********************************************
  *           User Configuration               *
