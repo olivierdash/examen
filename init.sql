@@ -30,3 +30,32 @@ CREATE TABLE Categorie(
     Description VARCHAR(100),
     Date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+-- 1. Insertion des Catégories
+INSERT INTO Categorie (Nom, Description) VALUES 
+('Électronique', 'Appareils high-tech et gadgets'),
+('Vêtements', 'Habits pour hommes, femmes et enfants'),
+('Maison', 'Articles de décoration et ameublement'),
+('Sports', 'Équipements sportifs et loisirs');
+
+-- 2. Insertion des Utilisateurs
+INSERT INTO User (Nom, email, MotdePasse) VALUES 
+('Jean Dupont', 'jean.dupont@email.com', 'pass123'),
+('Marie Laza', 'marie.laza@email.com', 'soleil2024'),
+('Luc Ratsi', 'luc.ratsi@email.com', 'securite99');
+
+-- 3. Insertion des Objets
+-- Note: Les IDs correspondent aux utilisateurs et catégories insérés ci-dessus
+INSERT INTO Objet (Titre, Description, Prix, IdProprietaire, IdCategorie) VALUES 
+('iPhone 13 Pro', 'État neuf, batterie 95%, couleur bleu.', 750.00, 1, 1),
+('Veste en cuir', 'Veste vintage, taille L, marron.', 45.00, 1, 2),
+('Table basse', 'Table en bois massif pour salon.', 120.00, 2, 3),
+('Raquette de Tennis', 'Modèle pro, très légère.', 80.00, 3, 4);
+
+-- 4. Insertion des Chemins d'Images
+INSERT INTO Objet_image (Nom, IdObjet) VALUES 
+('images/iphone13_front.jpg', 1),
+('images/iphone13_back.jpg', 1),
+('images/veste_cuir_1.png', 2),
+('images/table_basse_design.jpg', 3),
+('images/raquette_tennis.jpg', 4);

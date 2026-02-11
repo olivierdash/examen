@@ -17,22 +17,34 @@
                 <form action="/obj/add" method="post" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label for="name" class="form-label"><span><Strong>Nom de l'objet :</Strong></span></label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="Ex : T-shirt" required>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Ex : T-shirt"
+                            required>
                     </div>
 
                     <div class="mb-3">
                         <label for="desc" class="form-label"><span><Strong>Description :</Strong></span></label>
-                        <textarea class="form-control" id="desc" name="desc" placeholder="Ex : bleu" required></textarea>
+                        <textarea class="form-control" id="desc" name="desc" placeholder="Ex : bleu"
+                            required></textarea>
                     </div>
 
                     <div class="mb-3">
                         <label for="price" class="form-label"><span><strong>Prix :</strong></span></label>
-                        <input type="number" class="form-control" id="price" name="price" step="0.01" placeholder="Ex : 20 000" required>
+                        <input type="number" class="form-control" id="price" name="price" step="0.01"
+                            placeholder="Ex : 20 000" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <select name="categorie" id="categorie">
+                            <?php foreach ($categories as $key) { ?>
+                                <option value="<?php echo $key->getId(); ?>"><?php echo $key->getNom(); ?></option>
+                            <?php } ?>
+                        </select>
                     </div>
 
                     <div class="mb-3">
                         <label for="img">Importez une ou plusieurs images</label>
-                        <input type="file" class="form-control" id="img" name="img[]" accept="image/*" multiple required>
+                        <input type="file" class="form-control" id="img" name="img[]" accept="image/*" multiple
+                            required>
                     </div>
 
                     <button type="submit" class="btn btn-primary">Ajouter l'objet</button>

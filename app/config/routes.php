@@ -1,6 +1,7 @@
 <?php
 // routes.php
 use app\middlewares\SecurityHeadersMiddleware;
+use app\models\Categorie;
 use flight\Engine;
 use flight\net\Router;
 
@@ -15,11 +16,11 @@ $router->group('', function (Router $router) use ($app) {
     // GET home page - affichage du formulaire d'ajout
     $router->get('/', function () use ($app) {
         // On combine toutes les variables dans un seul appel render
-        $app->render('obj/add', [
-            'title'     => 'Ajouter un objet',
-            'BASE_URL'  => BASE_URL,
-            'csp_nonce' => Flight::get('csp_nonce') // Transmet le nonce pour le CSS/JS
-        ]);
+        $app->render('obj/add', ['categories' => Categorie::getAll()]);
+    });
+
+    $router->get('/debug-php', function () {
+        phpinfo();
     });
 
 }, [SecurityHeadersMiddleware::class]);
