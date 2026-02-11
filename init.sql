@@ -27,8 +27,7 @@ CREATE TABLE Objet_image(
 CREATE TABLE Categorie(
     ID INT PRIMARY KEY AUTO_INCREMENT,
     Nom VARCHAR(30),
-    Description VARCHAR(100),
-    Date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    Description VARCHAR(100)
 );
 
 -- 1. Insertion des Catégories

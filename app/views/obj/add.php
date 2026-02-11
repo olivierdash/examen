@@ -36,15 +36,14 @@
                     <div class="mb-3">
                         <select name="categorie" id="categorie">
                             <?php foreach ($categories as $key) { ?>
-                                <option value="<?php echo $key->getId(); ?>"><?php echo $key->getNom(); ?></option>
+                                <option value="<?php echo $key['ID']; ?>"><?php echo $key['Nom']; ?></option>
                             <?php } ?>
                         </select>
                     </div>
 
                     <div class="mb-3">
                         <label for="img">Importez une ou plusieurs images</label>
-                        <input type="file" class="form-control" id="img" name="img[]" accept="image/*" multiple
-                            required>
+                        <input type="file" class="form-control" id="img" name="img[]" accept="image/*" multiple required>
                     </div>
 
                     <button type="submit" class="btn btn-primary">Ajouter l'objet</button>

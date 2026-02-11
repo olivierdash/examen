@@ -13,14 +13,17 @@ use flight\net\Router;
 // Wrap all routes with SecurityHeadersMiddleware
 $router->group('', function (Router $router) use ($app) {
 
-    // GET home page - affichage du formulaire d'ajout
-    $router->get('/', function () use ($app) {
-        // On combine toutes les variables dans un seul appel render
-        $app->render('obj/add', ['categories' => Categorie::getAll()]);
-    });
+    $router->group('/obj', function () use ($router, $app) {
+        $router->get('/obj/form', function () use ($app) {
+            // On combine toutes les variables dans un seul appel render
+            $app->render('obj/add', ['categories' => Categorie::getAll()]);
+        });
 
-    $router->get('/debug-php', function () {
-        phpinfo();
+        $router->get('/obj/add', function () use ($app) {
+            // On combine toutes les variables dans un seul appel render
+            $app->render('obj/add', ['categories' => Categorie::getAll()]);
+        });
     });
+    // GET home page - affichage du formulaire d'ajout
 
 }, [SecurityHeadersMiddleware::class]);
