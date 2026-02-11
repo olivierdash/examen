@@ -1,4 +1,4 @@
-CREATE DATABASE Takalo_takalo;
+CREATE OR REPLACE DATABASE Takalo_takalo;
 
 USE Takalo_takalo;
 
@@ -28,5 +28,5 @@ CREATE TABLE Categorie(
     ID INT PRIMARY KEY AUTO_INCREMENT,
     Nom VARCHAR(30),
     Description VARCHAR(100),
-    Date_creation TIMESTAMP DEFAULT
+    Date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

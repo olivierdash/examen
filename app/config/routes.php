@@ -10,12 +10,16 @@ use flight\net\Router;
  */
 
 // Wrap all routes with SecurityHeadersMiddleware
-$router->group('', function(Router $router) use ($app) {
-    
-    // GET home page - display all products
-    $router->get('/', function() use ($app) {
-        $app->render('obj/add', ['title' => 'Accueil']);
+$router->group('', function (Router $router) use ($app) {
+
+    // GET home page - affichage du formulaire d'ajout
+    $router->get('/', function () use ($app) {
+        // On combine toutes les variables dans un seul appel render
+        $app->render('obj/add', [
+            'title'     => 'Ajouter un objet',
+            'BASE_URL'  => BASE_URL,
+            'csp_nonce' => Flight::get('csp_nonce') // Transmet le nonce pour le CSS/JS
+        ]);
     });
 
-    // POST insert/update product
 }, [SecurityHeadersMiddleware::class]);

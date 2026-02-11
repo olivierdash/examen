@@ -1,22 +1,6 @@
 <?php
+define('BASE_URL', rtrim(dirname($_SERVER['SCRIPT_NAME']), '/'));
 
-/**********************************************
- *      FlightPHP Skeleton Sample Config      *
- **********************************************
- *
- * Copy this file to config.php and update values as needed.
- * All settings are required unless marked as optional.
- *
- * Example:
- *   cp app/config/config_sample.php app/config/config.php
- *
- * This file is NOT tracked by git. Store sensitive credentials here.
- **********************************************/
-
-/**********************************************
- *         Application Environment            *
- **********************************************/
-// Set your timezone (e.g., 'America/New_York', 'UTC')
 date_default_timezone_set('UTC');
 
 // Error reporting level (E_ALL recommended for development)
@@ -32,10 +16,6 @@ if (function_exists('setlocale') === true) {
 	setlocale(LC_ALL, 'en_US.UTF-8');
 }
 
-/**********************************************
- *           FlightPHP Core Settings          *
- **********************************************/
-
 // Get the $app var to use below
 if (empty($app) === true) {
 	$app = Flight::app();
@@ -46,7 +26,7 @@ if (empty($app) === true) {
 $app->path(__DIR__ . $ds . '..' . $ds . '..');
 
 // Core config variables
-//$app->set('flight.base_url', '/',);           // Base URL for your app. Change if app is in a subdirectory (e.g., '/myapp/')
+$app->set('flight.base_url', '/', );           // Base URL for your app. Change if app is in a subdirectory (e.g., '/myapp/')
 $app->set('flight.case_sensitive', false);    // Set true for case sensitive routes. Default: false
 $app->set('flight.log_errors', true);         // Log errors to file. Recommended: true in production
 $app->set('flight.handle_errors', false);     // Let Tracy handle errors if false. Set true to use Flight's error handler
@@ -55,34 +35,36 @@ $app->set('flight.views.extension', '.php');  // View file extension (e.g., '.ph
 $app->set('flight.content_length', false);    // Send content length header. Usually false unless required by proxy
 
 // Generate a CSP nonce for each request and store in $app
-$nonce = base64_encode(random_bytes(16)); // Base64 is recommended over hex for nonces
+$nonce = base64_encode(random_bytes(16));
 $app->set('csp_nonce', $nonce);
 
-// Send the header to the browser
-// Modifiez cette ligne dans votre config.php
-$app->response()->header("Content-Security-Policy", "default-src 'self'; script-src 'self' 'nonce-$nonce' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; font-src 'self' https://cdnjs.cloudflare.com; object-src 'none';");/**********************************************
- *           User Configuration               *
- **********************************************/
+// Utilisez une politique permissive mais sécurisée pour les CDNs
+$csp_policy = "default-src 'self'; " .
+	"script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; " .
+	"style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; " .
+	"font-src 'self' https://cdnjs.cloudflare.com; " .
+	"img-src 'self' data:; " .
+	"object-src 'none';";
+
+// Dans config.php, après la définition de $csp_policy
+Flight::before('start', function() use ($csp_policy) {
+    Flight::response()->header("Content-Security-Policy", $csp_policy);
+});
+
+$app->response()->header("Content-Security-Policy", $csp_policy);
+
 return [
 	/**************************************
 	 *         Database Settings          *
 	 **************************************/
 	'database' => [
-		'host'     => '127.0.0.1',      // Database host (e.g., 'localhost', 'db.example.com')
-		'dbname'   => 'Takalo_takalo',   // Database name (e.g., 'flightphp')
-		'user'     => 'root',  // Database user (e.g., 'root')
+		'host' => '127.0.0.1',      // Database host (e.g., 'localhost', 'db.example.com')
+		'dbname' => 'Takalo_takalo',   // Database name (e.g., 'flightphp')
+		'user' => 'root',  // Database user (e.g., 'root')
 		'password' => '',  // Database password (never commit real passwords)
 
 		// SQLite Example:
 		// 'file_path' => __DIR__ . $ds . '..' . $ds . 'database.sqlite', // Path to SQLite file
 	],
 
-	// Google OAuth Credentials
-	// 'google_oauth' => [
-	//     'client_id'     => 'your_client_id',     // Google API client ID
-	//     'client_secret' => 'your_client_secret', // Google API client secret
-	//     'redirect_uri'  => 'your_redirect_uri',  // Redirect URI for OAuth callback
-	// ],
-
-	// Add more configuration sections below as needed
 ];
