@@ -114,8 +114,9 @@ class User
             Flight::render('admin/home', ['p' => $param, 'categories' => Categorie::getAll()]);
             return;
         }
-        if($this->ifUserExist($nom, $hashedMdp)){ 
-            Flight::render('home', ['objets' => Objet::getAll() ]);
+        if($this->ifUserExist($nom, $hashedMdp)){
+            $o = new Objet(); 
+            Flight::render('home', ['objets' => $o->getAll() ]);
             return;
         } 
         Flight::render('connect');
