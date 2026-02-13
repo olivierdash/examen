@@ -17,24 +17,24 @@
                 <form action="/obj/add" method="post" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label for="name" class="form-label"><span><Strong>Nom de l'objet :</Strong></span></label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="Ex : T-shirt"
+                        <input type="text" class="form-control" id="name" name="nom" placeholder="Ex : T-shirt"
                             required>
                     </div>
 
                     <div class="mb-3">
                         <label for="desc" class="form-label"><span><Strong>Description :</Strong></span></label>
-                        <textarea class="form-control" id="desc" name="desc" placeholder="Ex : bleu"
+                        <textarea class="form-control" id="desc" name="description" placeholder="Ex : bleu"
                             required></textarea>
                     </div>
 
                     <div class="mb-3">
                         <label for="price" class="form-label"><span><strong>Prix :</strong></span></label>
-                        <input type="number" class="form-control" id="price" name="price" step="0.01"
+                        <input type="number" class="form-control" id="price" name="prix" step="0.01"
                             placeholder="Ex : 20 000" required>
                     </div>
 
                     <div class="mb-3">
-                        <select name="categorie" id="categorie">
+                        <select name="idCategorie" id="categorie">
                             <?php foreach ($categories as $key) { ?>
                                 <option value="<?php echo $key['ID']; ?>"><?php echo $key['Nom']; ?></option>
                             <?php } ?>
