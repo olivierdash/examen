@@ -22,12 +22,12 @@ include(__DIR__ . '/../inc/function.php');
                     <button class="btn btn-warning text-dark fw-semibold" type="submit">Search</button>
                 </form>
                 <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/user/profile">Voir profil</a>
-        </li>
-      </ul>
-    </div>
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/user/profile">Voir profil</a>
+                        </li>
+                    </ul>
+                </div>
 
             </div>
         </nav>
