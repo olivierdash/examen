@@ -65,3 +65,8 @@ INSERT INTO Objet_image (Nom, IdObjet) VALUES
 ('images/veste_cuir_1.png', 2),
 ('images/table_basse_design.jpg', 3),
 ('images/raquette_tennis.jpg', 4);
+
+-- 5. Insertion des Échanges
+INSERT INTO Echanges (IdObjet1, IdObjet2, DateEchange) VALUES 
+(1, 3, '2024-05-01'),
+(2, 4, '2024-05-10');
