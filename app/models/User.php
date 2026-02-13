@@ -74,7 +74,8 @@ class User
         $stmt = $this->db->prepare($sql);
         // L'ordre doit être : Nom, email, MotdePasse
         $hashedMdp = password_hash($mdp, PASSWORD_DEFAULT);
-        return $stmt->execute([$nom, $email, $hashedMdp]);
+        $stmt->execute([$nom, $email, $hashedMdp]);
+        $_SESSION['user_id'] = $this->db->lastInsertId();
     }
 
     public function insert(){
@@ -115,6 +116,7 @@ class User
             Flight::render('admin/home', ['p' => $param, 'categories' => Categorie::getAll()]);
             return;
         }else if($this->ifUserExist($nom, $mdp)){
+            $_SESSION['user_id'] = 
             $o = new Objet(); 
             Flight::render('home', ['objets' => $o->getAll(), 'categories' => Categorie::getAll() ]);
             return;
