@@ -49,6 +49,11 @@ class User
         $this->email = $email;
     }
 
+    // fonciton qui retourne le nombres total des utilisateurs
+    function countUser() : int {
+        $sql = "SELECT COUNT(ID) FROM User";
+    }
+
     // Note : En production, on hache toujours le mot de passe
     public function setMotDePasse($motDePasse)
     {
