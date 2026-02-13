@@ -1,6 +1,7 @@
 <?php
     namespace app\Models;
     use app\models\Objet;
+    use app\models\Categorie;
     use Flight;
     use Exception;
     use PDO;
@@ -109,18 +110,15 @@ class User
         $data = Flight::request()->data;
         $nom = $data->nom;
         $mdp = $data->password;
-        $hashedMdp = password_hash($mdp, PASSWORD_DEFAULT);
         if($this->ifAdminExist($nom, $mdp)){
             $param = "category";
             Flight::render('admin/home', ['p' => $param, 'categories' => Categorie::getAll()]);
             return;
         }else if($this->ifUserExist($nom, $mdp)){
             $o = new Objet(); 
-            Flight::render('home', ['objets' => $o->getAll() ]);
+            Flight::render('home', ['objets' => $o->getAll(), 'categories' => Categorie::getAll() ]);
             return;
-        } 
-        throw new Exception("Utilisateur inconnu avec nom : "  . $nom . " et mot de passe " . $hashedMdp);
-    }
+        }     }
 
     // --- READ (Lire tout ou un seul) ---
     public function getAll()

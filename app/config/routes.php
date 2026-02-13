@@ -25,6 +25,9 @@ $router->group('', function (Router $router) use ($app) {
             $app->render('connect');
         });
 
+        $router->get('/profile', function() use ($app){
+            $app->render('users/profil/profil');
+        });
 
         $router->get('/profil/@id', function ($id) use ($app) {
             $user = UserController::getById($id);
