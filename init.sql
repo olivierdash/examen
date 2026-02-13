@@ -6,7 +6,7 @@ CREATE TABLE User(
     ID INT AUTO_INCREMENT PRIMARY KEY,
     Nom VARCHAR(30),
     email VARCHAR(30),
-    MotdePasse VARCHAR(250)
+    MotdePasse VARCHAR(30)
 );
 
 CREATE TABLE Objet(

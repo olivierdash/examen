@@ -4,10 +4,9 @@ use app\middlewares\SecurityHeadersMiddleware;
 use app\models\Categorie;
 use flight\Engine;
 use flight\net\Router;
-use app\Controllers\ObjetController;
+use app\controllers\ObjetController;
 use app\models\User;
 use app\models\Echanges;
-use app\models\Objet;
 /** 
  * @var Router $router 
  * @var Engine $app
@@ -52,10 +51,10 @@ $router->group('', function (Router $router) use ($app) {
             $app->render('obj/add', ['categories' => Categorie::getAll()]);
         });
 
-        $router->get('/obj/add', function () use ($app) {
+        $router->post('/obj/add', function () use ($app) {
             // On combine toutes les variables dans un seul appel render
             $idProprietaire = $_SESSION['user_id'] ?? null; // Récupère l'ID de l'utilisateur connecté depuis la session
-            ObjetController::create($idProprietaire);
+            ObjetController::create($_POST['nom'], $_POST['description'], $_POST['prix'], $idProprietaire, $_POST['idCategorie']);
             $app->render('obj/add', ['categories' => Categorie::getAll()]);
         });
     });
