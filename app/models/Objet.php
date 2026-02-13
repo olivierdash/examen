@@ -77,13 +77,13 @@ class Objet
     }
 
     public function deleteById($id) {
-        $sql = "DELETE FROM Objet WHERE id = ?";
+        $sql = "DELETE FROM Objet WHERE ID = ?";
         $stmt = $this->db->prepare($sql);
         return $stmt->execute([$id]);
     }
 
     public function getById($id) {
-        $sql = "SELECT * FROM Objet WHERE id = ?";
+        $sql = "SELECT * FROM Objet WHERE ID = ?";
         $stmt = $this->db->prepare($sql);
         $stmt->execute([$id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
