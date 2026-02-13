@@ -1,13 +1,11 @@
 <?php
     namespace app\Controllers;
-    use Flight;
-    use PDO;
-
+    use app\models\Objet;
     class ObjetController 
     {
-        public static function create($idProprietaire) {
+        public static function create($nom, $description, $prix, $idProprietaire, $idCategorie) {
             $objet = new Objet();
-            $objet->create($idProprietaire);
+            $objet->create($nom, $description, $prix, $idProprietaire, $idCategorie);
         }
     }
     

@@ -9,12 +9,14 @@ class Objet
     private $description;
     private $prix;
     private $idProprietaire;
+    private $idCategorie;
     private $db;
 
-    public function __construct($nom = null, $description = null, $prix = null, $id = null, $idProprietaire = null)
+    public function __construct($nom = null, $description = null, $prix = null, $id = null, $idProprietaire = null, $idCategorie = null)
     {
         $this->id = $id;
         $this->idProprietaire = $idProprietaire;
+        $this->idCategorie = $idCategorie;
         $this->nom = $nom;
         $this->description = $description;
         $this->prix = $prix;
@@ -44,6 +46,11 @@ class Objet
         return $this->idProprietaire;
     }
 
+    public function getIdCategorie()
+    {
+        return $this->idCategorie;
+    }
+
     
     // --- Setters ---
     public function setNom($nom)
@@ -64,29 +71,39 @@ class Objet
         $this->idProprietaire = $idProprietaire;
     }
 
+    public function setIdCategorie($idCategorie)
+    {
+        $this->idCategorie = $idCategorie;
+    }
+
     public function deleteById($id) {
-        $sql = "DELETE FROM objets WHERE id = ?";
+        $sql = "DELETE FROM Objet WHERE id = ?";
         $stmt = $this->db->prepare($sql);
         return $stmt->execute([$id]);
     }
 
     public function getById($id) {
-        $sql = "SELECT * FROM objets WHERE id = ?";
+        $sql = "SELECT * FROM Objet WHERE id = ?";
         $stmt = $this->db->prepare($sql);
         $stmt->execute([$id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     public function getAll() {
-        $sql = "SELECT * FROM objets";
+        $sql = "SELECT * FROM Objet";
         $stmt = $this->db->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function create($idProprietaire) {
-        $sql = "INSERT INTO objets (nom, description, prix, idProprietaire) VALUES (?, ?, ?, ?)";
+    public function create($nom, $description, $prix, $idProprietaire, $idCategorie) {
+        $this->setNom($nom);
+        $this->setDescription($description);
+        $this->setPrix($prix);
+        $this->setIdProprietaire($idProprietaire);
+        $this->setIdCategorie($idCategorie);
+        $sql = "INSERT INTO Objet (Titre, Description, Prix, IdProprietaire, IdCategorie) VALUES (?, ?, ?, ?, ?)";
         $stmt = $this->db->prepare($sql);
-        return $stmt->execute([$this->nom, $this->description, $this->prix, $idProprietaire]);
+        return $stmt->execute([$this->nom, $this->description, $this->prix, $idProprietaire, $this->idCategorie]);
     }
 }
 
