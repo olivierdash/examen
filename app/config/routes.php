@@ -25,14 +25,14 @@ $router->group('', function (Router $router) use ($app) {
         });
         $router->post('/connect', [User::class, 'tryConnect']);
         $router->post('/create', [User::class, 'insert']);
-        $router->get('/user/profile', function () use ($app) {
+        $router->get('/profile', function () use ($app) {
             $app->render('user/profile');
         });
 
-        $router->get('/users/list', function () use ($app) {
+        $router->get('/list', function () use ($app) {
             $userModel = new User();
             $users = $userModel->getAll(); // Récupère tous les utilisateurs
-            $app->render('users/list/list', ['users' => $users]);
+            $app->render('user/list', ['users' => $users]);
         });
     });
 

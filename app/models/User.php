@@ -1,5 +1,6 @@
 <?php
     namespace app\Models;
+    use app\models\Objet;
     use Flight;
     use PDO;
 class User
@@ -79,8 +80,12 @@ class User
         $nom = $data->nom;
         $email = $data->email;
         $mdp = $data->password;
-        $this->create($nom, $email, $mdp);
-        Flight::render('home');
+        $hashedMdp = password_hash($mdp, PASSWORD_BCRYPT);
+        if(! $this->ifUserExist($nom, $hashedMdp)){
+            $this->create($nom, $email, $mdp);
+        }
+        $o = new Objet();
+        Flight::render('home', ['objets' => $o->getAll() ]);
     }
 
     private function ifUserExist($nom, $password){
@@ -88,7 +93,7 @@ class User
         $stmt = $this->db->prepare($sql);
         $stmt->execute([$nom, $password]);
         $ret = $stmt->fetch();
-        return $ret['nb'] != 0;
+        return $ret['nb'] > 0;
     }
 
     private function ifAdminExist($nom, $password){
@@ -96,20 +101,21 @@ class User
         $stmt = $this->db->prepare($sql);
         $stmt->execute([$nom, $password]);
         $ret = $stmt->fetch();
-        return $ret['nb'] != 0;
+        return $ret['nb'] > 0;
     }
 
     public function tryConnect(){
         $data = Flight::request()->data;
         $nom = $data->nom;
         $mdp = $data->password;
-        if($this->ifAdminExist($nom, $mdp)){
+        $hashedMdp = password_hash($mdp, PASSWORD_BCRYPT);
+        if($this->ifAdminExist($nom, $hashedMdp)){
             $param = "category";
             Flight::render('admin/home', ['p' => $param, 'categories' => Categorie::getAll()]);
             return;
         }
-        if($this->ifUserExist($nom, $mdp)){
-            Flight::render('home');
+        if($this->ifUserExist($nom, $hashedMdp)){ 
+            Flight::render('home', ['objets' => Objet::getAll() ]);
             return;
         } 
         Flight::render('connect');
