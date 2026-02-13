@@ -87,7 +87,7 @@ class User
             $this->create($nom, $email, $mdp);
         }
         $o = new Objet();
-        Flight::render('home', ['objets' => $o->getAll() ]);
+        Flight::render('home', ['objets' => $o->getAll(), 'categories' => Categorie::getAll() ]);
     }
 
     private function ifUserExist($nom, $password){
