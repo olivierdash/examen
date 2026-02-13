@@ -16,6 +16,31 @@ use app\models\Objet;
 // Wrap all routes with SecurityHeadersMiddleware
 $router->group('', function (Router $router) use ($app) {
 
+    $router->get('/', function () use ($app) {
+        $app->render('home');
+    });
+
+    $router->group('/user', function () use ($router, $app) {
+        $router->get('/login', function () use ($app) {
+            $app->render('user/login');
+        });
+
+        $router->get('/register', function () use ($app) {
+            $app->render('user/register');
+        });
+
+        $router->get('/user/profile', function () use ($app) {
+            $app->render('user/profile');
+        });
+
+        $router->get('/users/list', function () use ($app) {
+            $userModel = new User();
+            $users = $userModel->getAll(); // Récupère tous les utilisateurs
+            $app->render('users/list/list', ['users' => $users]);
+        });
+    });
+
+
     $router->get('/stats', function () use ($app) {
         $userModel = new User();
         $userCount = $userModel->countUser(); // Récupère le nombre total d'utilisateurs
