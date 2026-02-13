@@ -43,6 +43,13 @@ CREATE TABLE Manager(
     MotdePasse VARCHAR(255)
 );
 
+CREATE TABLE Historique_Echange(
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    IdObjet INT,
+    IdProprietaire INT,
+    
+)
+
 -- 1. Insertion des Catégories
 INSERT INTO Categorie (Nom, Description) VALUES 
 ('Électronique', 'Appareils high-tech et gadgets'),

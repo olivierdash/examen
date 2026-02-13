@@ -19,7 +19,8 @@
             </p>
         </section>
         <section class="lst-obj">
-            <h2>Objets possédés</h2>
+            <?php if( isset($objets) && !empty($objets) ){ ?>
+                <h2>Objets possédés</h2>
             <ul>
                 <?php foreach ($objets as $objet) { ?>
                     <article>
@@ -28,6 +29,9 @@
                     </article>
                 <?php } ?>
             </ul>
+            <?php } else { ?>
+                <div class="p-3 bg-info bg-opacity-10 border border-info border-start-0 rounded-end"></div>
+            <?php } ?>
         </section>
     </main>
 </body>

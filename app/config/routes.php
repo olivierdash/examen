@@ -25,21 +25,16 @@ $router->group('', function (Router $router) use ($app) {
             $app->render('connect');
         });
 
-        $router->get('/profile', function() use ($app){
-            $app->render('users/profil/profil');
-        });
-
+        $router->get('/profile', [User::class, 'renderProfil']);
+        $router->post('/connect', [User::class, 'tryConnect']);
+        $router->post('/create', [User::class, 'insert']);
+        
         $router->get('/profil/@id', function ($id) use ($app) {
             $user = UserController::getById($id);
             $idProprietaire = $id;
             $objets = ObjetController::getByUser($idProprietaire);
             $app->render('users/profil/profil', ['user' => $user, 'objets' => $objets]);
         });
-
-        $router->post('/connect', [User::class, 'tryConnect']);
-        $router->post('/create', [User::class, 'insert']);
-
-
         $router->get('/list', function () use ($app) {
             $userModel = new User();
             $users = $userModel->getAll(); // Récupère tous les utilisateurs

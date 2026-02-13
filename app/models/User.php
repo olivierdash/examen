@@ -128,6 +128,14 @@ class User
         Flight::render('connect');
     }
 
+    public function renderProfil(){
+        $id = $_SESSION['user_id'];
+        $u = $this->getById($id);
+        $o = new Objet();
+        $objs = $o->getByUser($id);
+        Flight::render('users/profil/profil', ['user' => $u, 'objets' => $objs]);
+    }
+
     // --- READ (Lire tout ou un seul) ---
     public function getAll()
     {
