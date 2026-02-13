@@ -74,7 +74,7 @@ $router->group('', function (Router $router) use ($app) {
             $app->render('obj/fiche/fiche', ['objet' => $objet]);
         });
         
-        $router->post('/filtered_objet', [User::class, 'getFiltered']);
+        $router->post('/filtered_objet', [Objet::class, 'getFiltered']);
     });
 
     $router->group('/admin', function () use ($router, $app) {

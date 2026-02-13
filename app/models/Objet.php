@@ -95,7 +95,8 @@ class Objet
         }
         $stmt = $this->db->prepare($sql);
         $stmt->execute($param); 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $ret = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        Flight::render('obj/list', ['objets' => $ret]);
     }
 
     public function getByUser($idProprietaire) {
