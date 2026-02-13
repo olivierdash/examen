@@ -120,8 +120,6 @@ class User
             return;
         } 
         throw new Exception("Utilisateur inconnu avec nom : "  . $nom . " et mot de passe " . $hashedMdp);
-        Flight::render('connect');
-        return;
     }
 
     // --- READ (Lire tout ou un seul) ---
