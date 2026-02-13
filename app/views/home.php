@@ -1,5 +1,5 @@
 <?php
-include(__DIR__ . '/../inc/function.php');
+    include(__DIR__ . '/../inc/function.php');
 ?>
 <!DOCTYPE html>
 <html lang="fr">
