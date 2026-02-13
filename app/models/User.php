@@ -52,6 +52,8 @@ class User
     // fonciton qui retourne le nombres total des utilisateurs
     function countUser() : int {
         $sql = "SELECT COUNT(ID) FROM User";
+        $stmt = $this->db->query($sql);
+        return (int) $stmt->fetchColumn();
     }
 
     // Note : En production, on hache toujours le mot de passe

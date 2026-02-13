@@ -8,7 +8,8 @@
 <body>
     <main>
         <section>
-            
+            <h1>Statistiques</h1>
+            <p>Nombre total d'utilisateurs : <?php echo $userCount; ?></p>
         </section>
     </main>
 </body>

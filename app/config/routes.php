@@ -5,6 +5,7 @@ use app\models\Categorie;
 use flight\Engine;
 use flight\net\Router;
 use app\Controllers\ObjetController;
+use app\Models\User;
 /** 
  * @var Router $router 
  * @var Engine $app
@@ -12,6 +13,12 @@ use app\Controllers\ObjetController;
 
 // Wrap all routes with SecurityHeadersMiddleware
 $router->group('', function (Router $router) use ($app) {
+
+    $router->get('/stats', function () use ($app) {
+        $userModel = new User();
+        $userCount = $userModel->countUser(); // Récupère le nombre total d'utilisateurs
+        $app->render('statistiques/stats', ['userCount' => $userCount]);
+    });
 
     $router->group('/obj', function () use ($router, $app) {
         $router->get('/obj/form', function () use ($app) {
