@@ -74,6 +74,48 @@ class User
         return $stmt->execute([$nom, $email, $hashedMdp]);
     }
 
+    public function insert(){
+        $data = Flight::request()->data;
+        $nom = $data->nom;
+        $email = $data->email;
+        $mdp = $data->password;
+        $this->create($nom, $email, $mdp);
+        Flight::render('home');
+    }
+
+    private function ifUserExist($nom, $password){
+        $sql = "SELECT count(*) as nb FROM User WHERE nom LIKE ? AND motdepasse LIKE ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$nom, $password]);
+        $ret = $stmt->fetch();
+        return $ret['nb'] != 0;
+    }
+
+    private function ifAdminExist($nom, $password){
+        $sql = "SELECT count(*) as nb FROM Manager WHERE nom LIKE ? AND motdepasse LIKE ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$nom, $password]);
+        $ret = $stmt->fetch();
+        return $ret['nb'] != 0;
+    }
+
+    public function tryConnect(){
+        $data = Flight::request()->data;
+        $nom = $data->nom;
+        $mdp = $data->password;
+        if($this->ifAdminExist($nom, $mdp)){
+            $param = "category";
+            Flight::render('admin/home', ['p' => $param, 'categories' => Categorie::getAll()]);
+            return;
+        }
+        if($this->ifUserExist($nom, $mdp)){
+            Flight::render('home');
+            return;
+        } 
+        Flight::render('connect');
+        return;
+    }
+
     // --- READ (Lire tout ou un seul) ---
     public function getAll()
     {

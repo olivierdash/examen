@@ -17,16 +17,12 @@ use app\models\Echanges;
 $router->group('', function (Router $router) use ($app) {
 
     $router->get('/', function () use ($app) {
-        $app->render('home');
+        $app->render('login');
     });
 
     $router->group('/user', function () use ($router, $app) {
-        $router->get('/login', function () use ($app) {
-            $app->render('user/login');
-        });
-
-        $router->get('/register', function () use ($app) {
-            $app->render('user/register');
+        $router->get('/connect', function () use ($app) {
+            $app->render('connect');
         });
 
         $router->get('/profil/@id', function ($id) use ($app) {
@@ -34,7 +30,12 @@ $router->group('', function (Router $router) use ($app) {
             $idProprietaire = $id;
             $objets = ObjetController::getByUser($idProprietaire);
             $app->render('users/profil/profil', ['user' => $user, 'objets' => $objets]);
+
+
         });
+
+        $router->post('/connect', [User::class, 'tryConnect']);
+        $router->post('/create', [User::class, 'insert']);
 
         $router->get('/list', function () use ($app) {
             $userModel = new User();
@@ -68,6 +69,23 @@ $router->group('', function (Router $router) use ($app) {
         $router->get('/fiche/@id', function ($id) use ($app) {
             $objet = ObjetController::getById($id);
             $app->render('obj/fiche/fiche', ['objet' => $objet]);
+        });
+    });
+
+    $router->group('/admin', function () use ($router, $app) {
+        $router->get('/insert', function () use ($app) {
+            $app->render('admin/obj/add', ['categories' => Categorie::getAll()]);
+            return;
+        });
+        $router->get('/modif/@id', function () use ($app) {
+            $app->render('admin/obj/add', ['categories' => Categorie::getAll()]);
+            return;
+        });
+        $router->get('/deconnexion', function () use ($app) {
+            $app->render('login');
+        });
+        $router->get('/@id', function ($id) use ($app) {
+            $app->render('admin/home', ['p' => $id]);
         });
     });
     // GET home page - affichage du formulaire d'ajout
