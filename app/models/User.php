@@ -2,6 +2,7 @@
     namespace app\Models;
     use app\models\Objet;
     use Flight;
+    use Exception;
     use PDO;
 class User
 {
@@ -60,7 +61,7 @@ class User
     // Note : En production, on hache toujours le mot de passe
     public function setMotDePasse($motDePasse)
     {
-        $this->motDePasse = password_hash($motDePasse, PASSWORD_BCRYPT);
+        $this->motDePasse = password_hash($motDePasse, PASSWORD_DEFAULT);
     }
 
     /**
@@ -71,7 +72,7 @@ class User
         $sql = "INSERT INTO User (Nom, email, MotdePasse) VALUES (?, ?, ?)";
         $stmt = $this->db->prepare($sql);
         // L'ordre doit être : Nom, email, MotdePasse
-        $hashedMdp = password_hash($mdp, PASSWORD_BCRYPT);
+        $hashedMdp = password_hash($mdp, PASSWORD_DEFAULT);
         return $stmt->execute([$nom, $email, $hashedMdp]);
     }
 
@@ -80,7 +81,7 @@ class User
         $nom = $data->nom;
         $email = $data->email;
         $mdp = $data->password;
-        $hashedMdp = password_hash($mdp, PASSWORD_BCRYPT);
+        $hashedMdp = password_hash($mdp, PASSWORD_DEFAULT);
         if(! $this->ifUserExist($nom, $hashedMdp)){
             $this->create($nom, $email, $mdp);
         }
@@ -89,36 +90,36 @@ class User
     }
 
     private function ifUserExist($nom, $password){
-        $sql = "SELECT count(*) as nb FROM User WHERE nom LIKE ? AND motdepasse LIKE ?";
+        $sql = "SELECT count(*) as nb, motdepasse FROM User WHERE nom LIKE ? LIMIT 1";
         $stmt = $this->db->prepare($sql);
-        $stmt->execute([$nom, $password]);
+        $stmt->execute([$nom]);
         $ret = $stmt->fetch();
-        return $ret['nb'] > 0;
+        return $ret['nb'] > 0 && password_verify($password, $ret['motdepasse']);
     }
 
     private function ifAdminExist($nom, $password){
-        $sql = "SELECT count(*) as nb FROM Manager WHERE nom LIKE ? AND motdepasse LIKE ?";
+        $sql = "SELECT count(*) as nb, motdepasse FROM Manager WHERE nom LIKE ? LIMIT 1";
         $stmt = $this->db->prepare($sql);
-        $stmt->execute([$nom, $password]);
+        $stmt->execute([$nom]);
         $ret = $stmt->fetch();
-        return $ret['nb'] > 0;
+        return $ret['nb'] > 0 && password_verify($password, $ret['motdepasse']);
     }
 
     public function tryConnect(){
         $data = Flight::request()->data;
         $nom = $data->nom;
         $mdp = $data->password;
-        $hashedMdp = password_hash($mdp, PASSWORD_BCRYPT);
-        if($this->ifAdminExist($nom, $hashedMdp)){
+        $hashedMdp = password_hash($mdp, PASSWORD_DEFAULT);
+        if($this->ifAdminExist($nom, $mdp)){
             $param = "category";
             Flight::render('admin/home', ['p' => $param, 'categories' => Categorie::getAll()]);
             return;
-        }
-        if($this->ifUserExist($nom, $hashedMdp)){
+        }else if($this->ifUserExist($nom, $mdp)){
             $o = new Objet(); 
             Flight::render('home', ['objets' => $o->getAll() ]);
             return;
         } 
+        throw new Exception("Utilisateur inconnu avec nom : "  . $nom . " et mot de passe " . $hashedMdp);
         Flight::render('connect');
         return;
     }
