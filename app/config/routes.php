@@ -5,7 +5,9 @@ use app\models\Categorie;
 use flight\Engine;
 use flight\net\Router;
 use app\Controllers\ObjetController;
-use app\Models\User;
+use app\models\User;
+use app\models\Echanges;
+use app\models\Objet;
 /** 
  * @var Router $router 
  * @var Engine $app
@@ -17,7 +19,9 @@ $router->group('', function (Router $router) use ($app) {
     $router->get('/stats', function () use ($app) {
         $userModel = new User();
         $userCount = $userModel->countUser(); // Récupère le nombre total d'utilisateurs
-        $app->render('statistiques/stats', ['userCount' => $userCount]);
+        $exchangeModel = new Echanges();
+        $exchangeCount = $exchangeModel->countEchanges(); // Récupère le nombre total d'échanges
+        $app->render('statistiques/stats', ['userCount' => $userCount, 'exchangeCount' => $exchangeCount]);
     });
 
     $router->group('/obj', function () use ($router, $app) {

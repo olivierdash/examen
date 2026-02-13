@@ -30,6 +30,13 @@ CREATE TABLE Categorie(
     Description VARCHAR(100)
 );
 
+CREATE TABLE Echanges(
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    IdObjet1 INT,
+    IdObjet2 INT,
+    DateEchange DATE
+);
+
 -- 1. Insertion des Catégories
 INSERT INTO Categorie (Nom, Description) VALUES 
 ('Électronique', 'Appareils high-tech et gadgets'),

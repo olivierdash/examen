@@ -10,6 +10,7 @@
         <section>
             <h1>Statistiques</h1>
             <p>Nombre total d'utilisateurs : <?php echo $userCount; ?></p>
+            <p>Nombre d'echanges : <?php echo $exchangeCount; ?></p>
         </section>
     </main>
 </body>
