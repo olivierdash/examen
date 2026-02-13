@@ -8,6 +8,7 @@ use flight\net\Router;
 use app\controllers\ObjetController;
 use app\models\User;
 use app\models\Echanges;
+use app\models\Objet;
 /** 
  * @var Router $router 
  * @var Engine $app
