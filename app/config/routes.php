@@ -28,11 +28,11 @@ $router->group('', function (Router $router) use ($app) {
             $app->render('user/register');
         });
 
-        $router->get('/user/profile', function () use ($app) {
+        $router->get('/profile', function () use ($app) {
             $app->render('user/profile');
         });
 
-        $router->get('/users/list', function () use ($app) {
+        $router->get('/list', function () use ($app) {
             $userModel = new User();
             $users = $userModel->getAll(); // Récupère tous les utilisateurs
             $app->render('users/list/list', ['users' => $users]);
@@ -49,12 +49,12 @@ $router->group('', function (Router $router) use ($app) {
     });
 
     $router->group('/obj', function () use ($router, $app) {
-        $router->get('/obj/form', function () use ($app) {
+        $router->get('/form', function () use ($app) {
             // On combine toutes les variables dans un seul appel render
             $app->render('obj/add', ['categories' => Categorie::getAll()]);
         });
 
-        $router->post('/obj/add', function () use ($app) {
+        $router->post('/add', function () use ($app) {
             // On combine toutes les variables dans un seul appel render
             $idProprietaire = $_SESSION['user_id'] ?? null; // Récupère l'ID de l'utilisateur connecté depuis la session
             ObjetController::create($_POST['nom'], $_POST['description'], $_POST['prix'], $idProprietaire, $_POST['idCategorie']);
