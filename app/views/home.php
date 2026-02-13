@@ -1,15 +1,15 @@
 <?php
-    include(__DIR__ . '/../inc/function.php');
+include(__DIR__ . '/../inc/function.php');
 ?>
 <!DOCTYPE html>
 <html lang="fr">
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Document</title>
-<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
-<script src="/assets/js/bootstrap.bundle.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <script src="/assets/js/bootstrap.bundle.min.js"></script>
 </head>
 
 <body class="bg-light">
@@ -47,7 +47,8 @@
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <span class="h5 mb-0 text-warning fw-bold"><?= e($o['Prix'] ?? "0") ?> €</span>
                             </div>
-                            <a href="/obj/fiche/<?= e($o['ID']) ?>" class="btn btn-primary btn-sm w-100" role="button">Voir plus</a>
+                            <a href="/obj/fiche/<?= e($o['ID']) ?>" class="btn btn-primary btn-sm w-100" role="button">Voir
+                                plus</a>
                         </div>
                     </div>
                 </div>
