@@ -91,32 +91,36 @@ class User
         Flight::render('home', ['objets' => $o->getAll(), 'categories' => Categorie::getAll() ]);
     }
 
-    private function ifUserExist($nom, $password){
-        $sql = "SELECT count(*) as nb, motdepasse FROM User WHERE nom LIKE ? LIMIT 1";
+    private function ifUserExist($nom, $password, string $tablename){
+        $sql = "SELECT count(*) as nb, motdepasse, ID FROM " . $tablename;
+        $sql = $sql . " WHERE nom LIKE ? LIMIT 1";
         $stmt = $this->db->prepare($sql);
         $stmt->execute([$nom]);
         $ret = $stmt->fetch();
-        return $ret['nb'] > 0 && password_verify($password, $ret['motdepasse']);
-    }
-
-    private function ifAdminExist($nom, $password){
-        $sql = "SELECT count(*) as nb, motdepasse FROM Manager WHERE nom LIKE ? LIMIT 1";
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute([$nom]);
-        $ret = $stmt->fetch();
-        return $ret['nb'] > 0 && password_verify($password, $ret['motdepasse']);
+        $arr = [];
+        $arr['status'] = false;
+        if( $ret['nb'] > 0 && password_verify($password, $ret['motdepasse']) ){
+            $arr['status'] = true;
+        }
+        $arr['id'] = $ret['ID'];
+        return $arr;
     }
 
     public function tryConnect(){
         $data = Flight::request()->data;
         $nom = $data->nom;
         $mdp = $data->password;
-        if($this->ifAdminExist($nom, $mdp)){
+        $temp = $this->ifUserExist($nom, $mdp, "Manager");
+        if($temp['status']){
             $param = "category";
             Flight::render('admin/home', ['p' => $param, 'categories' => Categorie::getAll()]);
             return;
-        }else if($this->ifUserExist($nom, $mdp)){
-            $_SESSION['user_id'] = 
+        }
+        
+        $temp = $this->ifUserExist($nom, $mdp, "User");
+
+        if($temp['status']){
+            $_SESSION['user_id'] = $temp['id'];
             $o = new Objet(); 
             Flight::render('home', ['objets' => $o->getAll(), 'categories' => Categorie::getAll() ]);
             return;
