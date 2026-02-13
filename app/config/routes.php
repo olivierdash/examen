@@ -65,13 +65,14 @@ $router->group('', function (Router $router) use ($app) {
         $router->post('/add', function () use ($app) {
             // On combine toutes les variables dans un seul appel render
             $idProprietaire = $_SESSION['user_id'] ?? null; // Récupère l'ID de l'utilisateur connecté depuis la session
-            ObjetController::create($_POST['nom'], $_POST['description'], $_POST['prix'], $idProprietaire, $_POST['idCategorie']);
+            ObjetController::create($_POST['nom'], $_POST['description'], $_POST['prix'], $idProprietaire, $_POST['IdCategorie']);
             $app->render('obj/add/add', ['categories' => Categorie::getAll()]);
         });
 
         $router->get('/fiche/@id', function ($id) use ($app) {
+            $myObjects = ObjetController::getByUser($_SESSION['user_id'] ?? null);
             $objet = ObjetController::getById($id);
-            $app->render('obj/fiche/fiche', ['objet' => $objet]);
+            $app->render('obj/fiche/fiche', ['objet' => $objet, 'myObjects' => $myObjects]);
         });
         
         $router->post('/filtered_objet', [Objet::class, 'getFiltered']);

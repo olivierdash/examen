@@ -118,10 +118,7 @@ class User
             $o = new Objet(); 
             Flight::render('home', ['objets' => $o->getAll(), 'categories' => Categorie::getAll() ]);
             return;
-        } 
-        Flight::render('connect');
-        return;
-    }
+        }     }
 
     // --- READ (Lire tout ou un seul) ---
     public function getAll()

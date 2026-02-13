@@ -34,7 +34,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <select name="idCategorie" id="categorie">
+                        <select name="IdCategorie" id="categorie">
                             <?php foreach ($categories as $key) { ?>
                                 <option value="<?php echo $key['ID']; ?>"><?php echo $key['Nom']; ?></option>
                             <?php } ?>
