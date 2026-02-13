@@ -15,8 +15,17 @@ include(__DIR__ . '/../inc/function.php');
 <nav class="navbar navbar-expand-lg bg-primary shadow-sm">
 <div class="container-fluid">
 <a class="navbar-brand text-white fw-bold">Takalo takalo</a>
-<form class="d-flex ms-auto me-3" role="search">
-<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+<form class="d-flex ms-auto me-3 column-gap-3" method="post" action="/user/filtered_objet" role="search">
+<input class="form-control" type="search" placeholder="Search" aria-label="Search">
+
+            <!-- Example single danger button -->
+         
+            <select class="form-select" aria-label="Default select example" name="categ">
+  <option value="" selected>Tous</option>
+  <?php foreach ($categories as $categ) { ?>
+    <option value="<?= e($categ['ID']) ?>"><?= e($categ['Nom']) ?></option>
+    <?php } ?>
+</select>
 <button class="btn btn-warning text-dark fw-semibold" type="submit">Search</button>
 </form>
 <div class="rounded-circle bg-light" style="width: 50px; heigth: 50px;">

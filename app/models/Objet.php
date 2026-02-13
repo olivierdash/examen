@@ -76,6 +76,28 @@ class Objet
         $this->idCategorie = $idCategorie;
     }
 
+    public function getFiltered(){
+        $data = Flight::request()->data;
+        $title = $data->titre;
+        $categorie = $data->categ;
+        if( !isset($title) && !isset($categorie) ) return $this->getAll();
+
+        $sql = "SELECT * FROM Objet WHERE 1 = 1";
+        $param = [];
+        if( isset($title) ){
+            $sql = $sql . " AND Titre LIKE :Titre";
+            $param['Titre'] = $title; 
+        }
+
+        if( isset($categorie) ){
+            $sql = $sql . " AND IdCategorie LIKE :categ ";
+            $param['categ'] = $categorie; 
+        }
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute($param); 
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function getByUser($idProprietaire) {
         $sql = "SELECT * FROM Objet WHERE IdProprietaire = ?";
         $stmt = $this->db->prepare($sql);

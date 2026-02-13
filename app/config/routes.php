@@ -34,8 +34,6 @@ $router->group('', function (Router $router) use ($app) {
             $idProprietaire = $id;
             $objets = ObjetController::getByUser($idProprietaire);
             $app->render('users/profil/profil', ['user' => $user, 'objets' => $objets]);
-
-
         });
 
         $router->post('/connect', [User::class, 'tryConnect']);
@@ -75,6 +73,8 @@ $router->group('', function (Router $router) use ($app) {
             $objet = ObjetController::getById($id);
             $app->render('obj/fiche/fiche', ['objet' => $objet]);
         });
+        
+        $router->post('/filtered_objet', [User::class, 'getFiltered']);
     });
 
     $router->group('/admin', function () use ($router, $app) {
