@@ -1,31 +1,33 @@
 <?php
 include(__DIR__ . '/../inc/function.php');
 ?>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
-    <script src="/assets/js/bootstrap.bundle.min.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+<script src="/assets/js/bootstrap.bundle.min.js"></script>
 </head>
 <body class="bg-light">
-    <header>
-        <nav class="navbar navbar-expand-lg bg-primary shadow-sm">
-            <div class="container-fluid">
-                <a class="navbar-brand text-white fw-bold">Navbar</a>
-                <form class="d-flex ms-auto" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-warning text-dark fw-semibold" type="submit">Search</button>
-                </form>
-            </div>
-        </nav>
-    </header>
-
-    <main class="container-fluid mt-5">
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+<header>
+<nav class="navbar navbar-expand-lg bg-primary shadow-sm">
+<div class="container-fluid">
+<a class="navbar-brand text-white fw-bold">Takalo takalo</a>
+<form class="d-flex ms-auto me-3" role="search">
+<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+<button class="btn btn-warning text-dark fw-semibold" type="submit">Search</button>
+</form>
+<div class="rounded-circle bg-light" style="width: 50px; heigth: 50px;">
+<a href="/user/profile" class="rounded-circle overflow-hidden d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+</a>
+</div>
+</div>
+</nav>
+</header>
+<main class="container-fluid mt-5">
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
 <?php foreach($objets as $o){ ?>
 <div class="col">
 <div class="card h-100 border-0 shadow-sm">

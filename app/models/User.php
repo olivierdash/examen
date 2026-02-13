@@ -1,6 +1,7 @@
 <?php
     namespace app\Models;
     use app\models\Objet;
+    use app\models\Categorie;
     use Flight;
     use Exception;
     use PDO;
