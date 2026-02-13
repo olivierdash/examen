@@ -6,7 +6,7 @@ CREATE TABLE User(
     ID INT AUTO_INCREMENT PRIMARY KEY,
     Nom VARCHAR(30),
     email VARCHAR(30),
-    MotdePasse VARCHAR(30)
+    MotdePasse VARCHAR(250)
 );
 
 CREATE TABLE Objet(
@@ -35,6 +35,11 @@ CREATE TABLE Echanges(
     IdObjet1 INT,
     IdObjet2 INT,
     DateEchange DATE
+);
+
+CREATE TABLE Manager(
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    
 );
 
 -- 1. Insertion des Catégories

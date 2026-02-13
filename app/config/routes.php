@@ -17,18 +17,15 @@ use app\models\Objet;
 $router->group('', function (Router $router) use ($app) {
 
     $router->get('/', function () use ($app) {
-        $app->render('home');
+        $app->render('login');
     });
-
+    
     $router->group('/user', function () use ($router, $app) {
-        $router->get('/login', function () use ($app) {
-            $app->render('user/login');
+        $router->get('/connect', function() use ($app){
+            $app->render('connect');
         });
-
-        $router->get('/register', function () use ($app) {
-            $app->render('user/register');
-        });
-
+        $router->post('/connect', [User::class, 'tryConnect']);
+        $router->post('/create', [User::class, 'insert']);
         $router->get('/user/profile', function () use ($app) {
             $app->render('user/profile');
         });
@@ -60,6 +57,23 @@ $router->group('', function (Router $router) use ($app) {
             $idProprietaire = $_SESSION['user_id'] ?? null; // Récupère l'ID de l'utilisateur connecté depuis la session
             ObjetController::create($idProprietaire);
             $app->render('obj/add', ['categories' => Categorie::getAll()]);
+        });
+    });
+
+    $router->group('/admin', function () use ($router, $app) {
+        $router->get('/insert', function () use ($app){
+            $app->render('admin/obj/add', ['categories' => Categorie::getAll()]);
+            return;
+        });
+        $router->get('/modif/@id', function () use ($app){
+            $app->render('admin/obj/add', ['categories' => Categorie::getAll()]);
+            return;
+        });
+        $router->get('/deconnexion', function () use ($app) {
+            $app->render('login');
+        });
+        $router->get('/@id', function ($id) use ($app) {
+            $app->render('admin/home', ['p' => $id]);
         });
     });
     // GET home page - affichage du formulaire d'ajout
