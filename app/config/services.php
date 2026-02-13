@@ -59,6 +59,11 @@ $app->register('db', $pdoClass, [
     Debugger::$showBar === true  // Track APM queries in development
 ]);
 
+if(session_status() === PHP_SESSION_NONE){
+    session_start();
+}
+
+Flight::register('session', 'ArrayObject', [&$_SESSION]);
 /**********************************************
  *         Third-Party Integrations           *
  **********************************************/
