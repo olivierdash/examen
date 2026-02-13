@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-     <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
 </head>
+
 <body>
     <div class="container-fluid">
         <div class="row justify-content-center">
@@ -28,10 +30,11 @@
         <div class="row justify-content-center">
             <div class="col-md-5 col-sm-12">
                 <div class="d-flex justify-content-center">
-                     Pas encore de compte ?<a href="/"> Creer un compte</a>
+                    Pas encore de compte ?<a href="/"> Creer un compte</a>
                 </div>
             </div>
         </div>
     </div>
 </body>
+
 </html>

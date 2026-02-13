@@ -38,7 +38,7 @@
                 <div class="row justify-content-center">
                     <div class="col-md-6 col-sm-12">
                         <div class="d-block">
-                          Vouz avez deja un compte ? <a href="/user/connect">Se connecter</a>
+                            Vouz avez deja un compte ? <a href="/user/connect">Se connecter</a>
                         </div>
                     </div>
                 </div>
@@ -46,14 +46,14 @@
         </div>
     </div>
     <script>
-    document.addEventListener("DOMContentLoaded", function(){
-         const map = {
-    nom: { input: "#nom", err: "#nomError" },
-    email: { input: "#email", err: "#emailError" },
-    password: { input: "#password", err: "#passwordError" }
-  };
-    });
-</script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const map = {
+                nom: { input: "#nom", err: "#nomError" },
+                email: { input: "#email", err: "#emailError" },
+                password: { input: "#password", err: "#passwordError" }
+            };
+        });
+    </script>
 </body>
 
 </html>
