@@ -1,118 +1,49 @@
+<?php
+include(__DIR__ . '/../inc/function.php');
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-      <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
     <script src="/assets/js/bootstrap.bundle.min.js"></script>
 </head>
-<body>
+<body class="bg-light">
     <header>
-
-    
-
-<nav class="navbar bg-body-tertiary">
-  <div class="container-fluid">
-    <a class="navbar-brand">Navbar</a>
-    <form class="d-flex" role="search">
-      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success" type="submit">Search</button>
-    </form>
-  </div>
-</nav>
-
-
+        <nav class="navbar navbar-expand-lg bg-primary shadow-sm">
+            <div class="container-fluid">
+                <a class="navbar-brand text-white fw-bold">Navbar</a>
+                <form class="d-flex ms-auto" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-warning text-dark fw-semibold" type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
     </header>
-    <main class="container-fluid mt-3">
-        <div class="row row-cols-md-2 row-cols-lg-4 g-4">
-        <div class="col">
-      
-              <div class="card" style="width: 18rem;">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-  </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">An item</li>
-    <li class="list-group-item">A second item</li>
-    <li class="list-group-item">A third item</li>
-  </ul>
-  <div class="card-body">
 
-  </div>
+    <main class="container-fluid mt-5">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+<?php foreach($objets as $o){ ?>
+<div class="col">
+<div class="card h-100 border-0 shadow-sm">
+<img src="/assets/images/1.jpg" class="card-img-top object-fit-cover" alt="..." style="height: 200px; object-fit: cover;">
+<div class="card-body">
+<h5 class="card-title text-primary"><?= e($o['Titre'] ?? "test") ?></h5>
+<p class="card-text text-muted"><?= e($o['Description'] ?? "234") ?></p>
 </div>
-    </div>
-    <div class="col">
-      
-              <div class="card" style="width: 18rem;">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-  </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">An item</li>
-    <li class="list-group-item">A second item</li>
-    <li class="list-group-item">A third item</li>
-  </ul>
-  <div class="card-body">
-
-  </div>
+<div class="card-body border-top pt-3">
+<div class="d-flex justify-content-between align-items-center mb-3">
+<span class="h5 mb-0 text-warning fw-bold"><?= e($o['Prix'] ?? "0") ?> €</span>
 </div>
-    </div>
-    <div class="col">
-      
-              <div class="card" style="width: 18rem;">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-  </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">An item</li>
-    <li class="list-group-item">A second item</li>
-    <li class="list-group-item">A third item</li>
-  </ul>
-  <div class="card-body">
-
-  </div>
+<a href="/obj/fiche/<?= e($o['ID']) ?>" class="btn btn-primary btn-sm w-100" role="button">Voir plus</a>
 </div>
-    </div>
-    <div class="col">
-      
-              <div class="card" style="width: 18rem;">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-  </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">An item</li>
-    <li class="list-group-item">A second item</li>
-    <li class="list-group-item">A third item</li>
-  </ul>
-  <div class="card-body">
-
-  </div>
 </div>
-    </div>
-    <div class="col">
-      
-              <div class="card" style="width: 18rem;">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-  </div>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">An item</li>
-    <li class="list-group-item">A second item</li>
-    <li class="list-group-item">A third item</li>
-  </ul>
-  <div class="card-body">
-
-  </div>
 </div>
-    </div>
-
-        </div>
-    </main>
+<?php } ?>
+</div>
+</main>
 </body>
 </html>

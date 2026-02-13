@@ -39,7 +39,8 @@ CREATE TABLE Echanges(
 
 CREATE TABLE Manager(
     ID INT PRIMARY KEY AUTO_INCREMENT,
-    
+    Nom VARCHAR(30),
+    MotdePasse VARCHAR(255)
 );
 
 -- 1. Insertion des Catégories
