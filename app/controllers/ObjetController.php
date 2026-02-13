@@ -7,6 +7,16 @@
             $objet = new Objet();
             $objet->create($nom, $description, $prix, $idProprietaire, $idCategorie);
         }
+
+        public static function getByUser($idProprietaire) {
+            $objet = new Objet();
+            return $objet->getByUser($idProprietaire);
+        }
+
+        public static function getById($id) {
+            $objet = new Objet();
+            return $objet->getById($id);
+        }
     }
     
 ?>

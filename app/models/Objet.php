@@ -76,6 +76,13 @@ class Objet
         $this->idCategorie = $idCategorie;
     }
 
+    public function getByUser($idProprietaire) {
+        $sql = "SELECT * FROM Objet WHERE IdProprietaire = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$idProprietaire]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function deleteById($id) {
         $sql = "DELETE FROM Objet WHERE ID = ?";
         $stmt = $this->db->prepare($sql);

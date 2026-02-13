@@ -11,10 +11,10 @@
             <h1>Liste des utilisateurs</h1>
             <ul>
                 <?php foreach ($users as $user) { ?>
-                    <li><?php echo $user['Nom']; ?> - <?php echo $user['email']; ?></li>
+                    <li> <a href="/user/profil/<?php echo $user['ID']; ?>"><?php echo $user['Nom']; ?></a> - <?php echo $user['email']; ?></li>
                 <?php } ?>
             </ul>
         </section>
     </main>
-</body>
+</body> 
 </html>

@@ -1,5 +1,6 @@
 <?php
 // routes.php
+use app\controllers\UserController;
 use app\middlewares\SecurityHeadersMiddleware;
 use app\models\Categorie;
 use flight\Engine;
@@ -28,8 +29,11 @@ $router->group('', function (Router $router) use ($app) {
             $app->render('user/register');
         });
 
-        $router->get('/profile', function () use ($app) {
-            $app->render('user/profile');
+        $router->get('/profil/@id', function ($id) use ($app) {
+            $user = UserController::getById($id);
+            $idProprietaire = $id;
+            $objets = ObjetController::getByUser($idProprietaire);
+            $app->render('users/profil/profil', ['user' => $user, 'objets' => $objets]);
         });
 
         $router->get('/list', function () use ($app) {
@@ -51,14 +55,19 @@ $router->group('', function (Router $router) use ($app) {
     $router->group('/obj', function () use ($router, $app) {
         $router->get('/form', function () use ($app) {
             // On combine toutes les variables dans un seul appel render
-            $app->render('obj/add', ['categories' => Categorie::getAll()]);
+            $app->render('obj/add/add', ['categories' => Categorie::getAll()]);
         });
 
         $router->post('/add', function () use ($app) {
             // On combine toutes les variables dans un seul appel render
             $idProprietaire = $_SESSION['user_id'] ?? null; // Récupère l'ID de l'utilisateur connecté depuis la session
             ObjetController::create($_POST['nom'], $_POST['description'], $_POST['prix'], $idProprietaire, $_POST['idCategorie']);
-            $app->render('obj/add', ['categories' => Categorie::getAll()]);
+            $app->render('obj/add/add', ['categories' => Categorie::getAll()]);
+        });
+
+        $router->get('/fiche/@id', function ($id) use ($app) {
+            $objet = ObjetController::getById($id);
+            $app->render('obj/fiche/fiche', ['objet' => $objet]);
         });
     });
     // GET home page - affichage du formulaire d'ajout
