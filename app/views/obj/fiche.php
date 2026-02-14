@@ -45,7 +45,7 @@
     </div>
 </main>
 
-<script id="my-objects-data" type="application/json">
+<script nonce="<?= Flight::get('csp_nonce') ?>" id="my-objects-data" type="application/json">
     <?php echo json_encode($myObjects); ?>
 </script>
-<script src="/assets/js/exchange.js"></script>
+<script nonce="<?= Flight::get('csp_nonce') ?>" src="/assets/js/exchange.js"></script>
