@@ -22,6 +22,13 @@ $router->group('', function (Router $router) use ($app) {
         $app->render('login');
     });
 
+    $router->get('/accueil', function () use ($app) {
+        $objets = ObjetController::getAll();
+        $categories = CategorieController::getAll();
+        $app->render('home', ['objets' => $objets, 'categories' => $categories]);
+        //
+    });
+
     $router->group('/user', function () use ($router, $app) {
         $router->get('/connect', function () use ($app) {
             $app->render('connect');
@@ -70,7 +77,8 @@ $router->group('', function (Router $router) use ($app) {
             $myObjects = ObjetController::getByUser($_SESSION['user_id'] ?? null);
             $objet = ObjetController::getById($id);
             $categorie = CategorieController::getById($objet['IdCategorie']);
-            $app->render('obj/fiche/fiche', ['objet' => $objet, 'myObjects' => $myObjects, 'categorie' => $categorie]);
+            $nonce = Flight::view()->get('csp_nonce');
+            $app->render('obj/fiche/fiche', ['objet' => $objet, 'myObjects' => $myObjects, 'categorie' => $categorie, 'csp_nonce' => $nonce]);
         });
         
         $router->post('/filtered_objet', [Objet::class, 'getFiltered']);

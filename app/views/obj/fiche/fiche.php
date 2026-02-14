@@ -20,20 +20,36 @@
         <aside>
             <button id="proposition">Proposer un échange</button>
         </aside>
+        <div class="retour">
+            <a href="/accueil">Retour à l'accueil</a>
+        </div>
     </main>
-    <script>
-        const propositionBtn = document.getElementById('proposition');
-        propositionBtn.addEventListener('click', () => {
-            // Afficher une liste de mes objets
-            const myObjects = <?php echo json_encode($myObjects); ?>; // Récupérer mes objets depuis PHP
+    <script nonce="<?= Flight::get('csp_nonce') ?>">
+        const boutonProposition = document.getElementById('proposition');
+
+        boutonProposition.addEventListener('click', () => {
+            // 1. Supprime l'ancien select s'il existe déjà
+            let selectExistant = document.getElementById('select-existant');
+            if (selectExistant) {
+                selectExistant.remove();
+            }
+
+            const mesObjets = <?php echo json_encode($myObjects); ?>;
+
+            // 2. Crée le nouvel élément select
             let select = document.createElement('select');
-            myObjects.forEach(obj => {
+            select.id = 'select-existant';
+
+            mesObjets.forEach(Objet => {
                 let option = document.createElement('option');
-                option.value = obj.ID;
-                option.text = obj.Titre;
+                option.value = Objet.ID; // Utilise bien les majuscules selon ton var_dump
+                option.textContent = Objet.Titre;
                 select.appendChild(option);
             });
-            document.body.appendChild(select);
+
+            // 3. IMPORTANT : Ajoute le select dans le document pour qu'il apparaisse
+            // Ici, on l'ajoute juste après le bouton
+            boutonProposition.parentNode.insertBefore(select, boutonProposition.nextSibling);
         });
     </script>
 </body>

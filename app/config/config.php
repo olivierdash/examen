@@ -35,23 +35,11 @@ $app->set('flight.views.extension', '.php');  // View file extension (e.g., '.ph
 $app->set('flight.content_length', false);    // Send content length header. Usually false unless required by proxy
 
 // Generate a CSP nonce for each request and store in $app
-$nonce = base64_encode(random_bytes(16));
+$nonce = base64_encode(random_bytes(16)); // Base64 is recommended over hex for nonces
 $app->set('csp_nonce', $nonce);
 
-// Utilisez une politique permissive mais sécurisée pour les CDNs
-$csp_policy = "default-src 'self'; " .
-	"script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; " .
-	"style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; " .
-	"font-src 'self' https://cdnjs.cloudflare.com; " .
-	"img-src 'self' data:; " .
-	"object-src 'none';";
-
-// Dans config.php, après la définition de $csp_policy
-Flight::before('start', function() use ($csp_policy) {
-    Flight::response()->header("Content-Security-Policy", $csp_policy);
-});
-
-$app->response()->header("Content-Security-Policy", $csp_policy);
+// Send the header to the browser
+$app->response()->header("Content-Security-Policy", "script-src 'self' 'nonce-$nonce'; object-src 'none';");
 
 return [
 	/**************************************
