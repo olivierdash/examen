@@ -1,40 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <title>Troc&Co - Connexion</title>
+    <link rel="stylesheet" nonce="<?= Flight::get('csp_nonce') ?>" href="/assets/css/style.css">
 </head>
 
-<body>
-    <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="col-md-5 col-sm-12">
-                <form method="POST" action="/user/connect" class="bg-white p-4 mt-5">
-                    <h2 class="mb-4">Connectez vous a votre compte</h2>
-                    <div class="mb-3">
-                        <label for="username" class="form-label">Nom d'utilisateur</label>
-                        <input type="text" class="form-control" id="username" name="nom">
-                    </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Mot de passe</label>
-                        <input type="password" class="form-control" id="password" name="password">
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100">Se connecter</button>
-                </form>
+<body class="auth-page">
+    <div class="auth-wrapper">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h2 class="auth-title">Bon retour !</h2>
+                <p class="auth-subtitle">Connectez-vous à votre espace Troc</p>
             </div>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-md-5 col-sm-12">
-                <div class="d-flex justify-content-center">
-                    Pas encore de compte ?<a href="/"> Creer un compte</a>
+
+            <form method="POST" action="/user/connect" class="auth-form">
+                <div class="input-group">
+                    <label class="auth-label">Nom d'utilisateur</label>
+                    <input type="text" class="auth-input" name="nom" placeholder="Ex: JeanDupont" required>
                 </div>
+
+                <div class="input-group">
+                    <label class="auth-label">Mot de passe</label>
+                    <input type="password" class="auth-input" name="password" placeholder="••••••••" required>
+                </div>
+
+                <button type="submit" class="auth-btn">Se connecter</button>
+            </form>
+
+            <div class="auth-footer">
+                <span>Pas encore de compte ?</span>
+                <a href="/" class="auth-link">Créer un compte</a>
             </div>
         </div>
     </div>
+
+    <script nonce="<?= Flight::get('csp_nonce') ?>" src="/assets/js/script.js"></script>
+    <script nonce="<?= Flight::get('csp_nonce') ?>" src="/assets/js/validation.js"></script>
 </body>
 
 </html>

@@ -1,39 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
+<main class="container profil-page">
+    <section class="profil-header">
+        <div class="profil-avatar">
+            <i class="bi bi-person-circle"></i>
+        </div>
+        <div class="profil-info">
+            <h1><?php echo $user['Nom']; ?></h1>
+            <p class="profil-email"><i class="bi bi-envelope"></i> <?php echo $user['email']; ?></p>
+            <div class="profil-stats">
+                <span class="badge-stat"><strong><?php echo count($objets); ?></strong> Objets</span>
+            </div>
+        </div>
+        <div class="profil-actions">
+            <a href="/obj/form" class="btn-primary-small"><i class="bi bi-plus-lg"></i> Ajouter un objet</a>
+        </div>
+    </section>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+    <section class="profil-objects">
+        <div class="section-title-group">
+            <h2 class="section-title">Mes Objets possédés</h2>
+            <div class="title-underline"></div>
+        </div>
 
-<body>
-    <main>
-        <section class="info-user">
-            <h1>Profil de l'utilisateur</h1>
-            <p>Nom :
-                <?php echo $user['Nom']; ?>
-            </p>
-            <p>Email :
-                <?php echo $user['email']; ?>
-            </p>
-        </section>
-        <section class="lst-obj">
-            <?php if( isset($objets) && !empty($objets) ){ ?>
-                <h2>Objets possédés</h2>
-            <ul>
-                <?php foreach ($objets as $objet) { ?>
-                    <article>
-                        <h3><?php echo $objet['Titre']; ?></h3>
-                        <p><?php echo $objet['Description']; ?></p>
+        <?php if(isset($objets) && !empty($objets)): ?>
+            <div class="objects-grid">
+                <?php foreach ($objets as $objet): ?>
+                    <article class="object-card">
+                        <div class="card-image-placeholder">
+                            <i class="bi bi-box-seam"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="object-title"><?php echo $objet['Titre']; ?></h3>
+                            <p class="object-description"><?php echo $objet['Description']; ?></p>
+                            <div class="card-footer">
+                                <a href="/obj/fiche/<?php echo $objet['ID']; ?>" class="btn-text">Gérer l'objet <i class="bi bi-arrow-right"></i></a>
+                            </div>
+                        </div>
                     </article>
-                <?php } ?>
-            </ul>
-            <?php } else { ?>
-                <div class="p-3 bg-info bg-opacity-10 border border-info border-start-0 rounded-end"></div>
-            <?php } ?>
-        </section>
-    </main>
-</body>
-
-</html>
+                <?php endforeach; ?>
+            </div>
+        <?php else: ?>
+            <div class="empty-state">
+                <i class="bi bi-emoji-neutral"></i>
+                <p>Vous n'avez pas encore d'objets à échanger.</p>
+                <a href="/obj/form" class="auth-link">Commencer maintenant</a>
+            </div>
+        <?php endif; ?>
+    </section>
+</main>

@@ -1,75 +1,1063 @@
-/* add.php */
+/* Variables de design */
+:root {
+    --primary-color: #4f46e5;
+    --primary-hover: #4338ca;
+    --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --text-main: #1f2937;
+    --text-muted: #6b7280;
+    --white: #ffffff;
+    --border-color: #e5e7eb;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
-/* Le formulaire */
+* {
+    margin: 0; padding: 0; box-sizing: border-box;
+    font-family: 'Segoe UI', Roboto, sans-serif;
+}
+
+body {
+    background-color: #f3f4f6;
+    min-height: 100vh;
+    display: flex;
+}
+
+/* Conteneur principal */
+.login-container, .auth-page {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+}
+
+/* Cas particulier : Page de connexion centrée */
+.auth-page {
+    background: var(--bg-gradient); /* Garde le dégradé pour la connexion centrée */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+/* Section Image (Inscription) */
+.login-image-side {
+    flex: 1;
+    display: none;
+    background-color: #4f46e5;
+    /* Motif géométrique "Polka dots" discret et moderne */
+    background-image: radial-gradient(rgba(255, 255, 255, 0.2) 2px, transparent 2px);
+    background-size: 30px 30px;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    overflow: hidden;
+}
+
+/* Petit effet de lumière pour donner du relief */
+.login-image-side::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    animation: rotateGradient 20s linear infinite;
+}
+
+@keyframes rotateGradient {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@media (min-width: 768px) { 
+    .login-image-side { display: flex; } 
+}
+
+@media (min-width: 768px) { .login-image-side { display: flex; } }
+
+.login-overlay {
+    text-align: center;
+    color: var(--white);
+    max-width: 400px;
+}
+
+/* Section Formulaire */
+.login-form-side, .auth-wrapper {
+    flex: 1.2;
+    background-color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+/* La carte du formulaire */
+/* Correction de l'animation de la carte */
+/* Style de carte identique pour les deux pages */
+.auth-card {
+    background: var(--white);
+    padding: 2.5rem;
+    border-radius: 16px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 420px;
+    z-index: 1;
+    
+    /* LIGNES CRUCIALES POUR L'ANIMATION */
+    opacity: 0; 
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+/* ÉTAT FINAL (Déclenché par script.js) */
+.auth-card.visible {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+.auth-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    color: var(--text-main);
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+/* Effet de survol sur les inputs pour les deux pages */
+.auth-input:hover {
+    border-color: #cbd5e1;
+}
+
+.auth-page .auth-card {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    /* Optionnel : effet de flou léger derrière la carte */
+    backdrop-filter: blur(10px); 
+}
+
+.auth-subtitle { color: var(--text-muted); margin-bottom: 2rem; }
+
+/* Champs de saisie */
+.input-group, .mb-3, .mb-4 { margin-bottom: 1.5rem; }
+
+.auth-label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-main);
+}
+
+input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    outline: none;
+    transition: var(--transition);
+    font-size: 1rem;
+}
+
+input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+    transform: scale(1.01);
+}
+
+/* Bouton */
+.auth-btn {
+    width: 100%;
+    padding: 0.9rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.auth-btn:hover {
+    background-color: var(--primary-hover);
+    box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.4);
+}
+
+.auth-btn:active { transform: scale(0.98); }
+
+/* Footer */
+.auth-footer { margin-top: 2rem; text-align: center; font-size: 0.9rem; color: var(--text-muted); }
+.auth-link { color: var(--primary-color); text-decoration: none; font-weight: 600; }
+.auth-link:hover {
+    text-decoration: underline;
+}
+
+.auth-btn:disabled {
+    background-color: var(--text-muted);
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* Optionnel : petite info-bulle d'aide sous le mot de passe */
+.password-hint {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: -1rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+/* Animations */
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInRight {
+    from { opacity: 0; transform: translateX(20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* Adaptabilité Mobile */
+@media (max-width: 767px) {
+    .login-form-side {
+        flex: 1;
+    }
+    .auth-title {
+        font-size: 1.5rem;
+    }
+}
+
+/* --- Styles de la Page d'Accueil --- */
+
+/* Hero Section */
+.home-hero {
+    padding: 4rem 0 2rem;
+    text-align: left;
+}
+
+.home-title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--text-main);
+    letter-spacing: -1px;
+    margin-bottom: 0.5rem;
+}
+
+.home-subtitle {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+}
+
+/* Grille d'objets */
+.objects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    padding-bottom: 4rem;
+}
+
+/* Carte Objet */
+.object-card {
+    background: var(--white);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    transition: var(--transition);
+    border: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+}
+
+.object-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    border-color: var(--primary-color);
+}
+
+/* Image de la carte */
+.card-image {
+    position: relative;
+    height: 220px;
+    overflow: hidden;
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.object-card:hover .card-image img {
+    transform: scale(1.1);
+}
+
+.card-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(4px);
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+/* Contenu de la carte */
+.card-content {
+    padding: 1.5rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.object-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 1rem;
+}
+
+.card-info {
+    margin-bottom: 1.5rem;
+}
+
+.object-price {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--primary-color);
+}
+
+/* Bouton de détail */
+.btn-detail {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 0.8rem;
+    background: #f3f4f6;
+    color: var(--text-main);
+    text-decoration: none;
+    border-radius: 12px;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.object-card:hover .btn-detail {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* --- Layout Global (Hors pages auth) --- */
+.site-layout {
+    display: block; /* Annule le centrage des pages Login/Connect */
+    background-color: #f9fafb;
+}
+
 .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* --- Header & Navbar --- */
+.main-header {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.navbar-custom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+}
+
+.brand {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text-main);
+    text-decoration: none;
+    letter-spacing: -1px;
+}
+
+.brand span { color: var(--primary-color); }
+
+.nav-controls {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: var(--transition);
+}
+
+.nav-links a:hover, .nav-links a.active {
+    color: var(--primary-color);
+}
+
+/* Barre de recherche moderne */
+.search-bar {
+    display: flex;
+    background: #f3f4f6;
+    border-radius: 50px;
+    padding: 5px 15px;
+    border: 1px solid transparent;
+    transition: var(--transition);
+}
+
+.search-bar:focus-within {
+    background: white;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+}
+
+.search-bar input {
+    background: none;
+    border: none;
+    padding: 8px;
+    outline: none;
+    width: 200px;
+}
+
+.search-bar button {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+}
+
+/* Bouton Quitter spécial */
+.btn-logout-alt {
+    background: #fee2e2;
+    color: #ef4444 !important;
+    padding: 8px 16px;
+    border-radius: 8px;
+}
+
+.btn-logout-alt:hover {
+    background: #ef4444;
+    color: white !important;
+}
+
+/* --- Footer --- */
+.main-footer {
+    padding: 3rem 0;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+.footer-divider {
+    height: 1px;
+    background: var(--border-color);
+    margin-bottom: 2rem;
+}
+
+.main-footer span {
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+/* --- Barre de Recherche avec Bouton --- */
+.search-bar {
+    display: flex;
+    align-items: center;
+    background: #f3f4f6;
+    border-radius: 14px; /* Un peu moins arrondi pour matcher le bouton */
+    padding: 4px; /* Espace interne pour le bouton */
+    border: 1px solid var(--border-color);
+    transition: var(--transition);
+    gap: 5px;
+}
+
+.search-bar:focus-within {
+    background: white;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+}
+
+.search-input-wrapper {
+    display: flex;
+    align-items: center;
+    padding-left: 12px;
+    flex-grow: 1;
+}
+
+.search-input-wrapper i {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.search-input-wrapper input {
+    background: none;
+    border: none;
+    padding: 10px;
+    outline: none;
+    width: 220px;
+    font-size: 0.9rem;
+}
+
+/* Le bouton Rechercher */
+.btn-search-submit {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-search-submit:hover {
+    background: var(--primary-hover);
+    transform: scale(1.02);
+}
+
+.btn-search-submit:active {
+    transform: scale(0.98);
+}
+
+/* Conteneur du formulaire de recherche */
+.search-bar-container {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Espace entre la barre et le bouton */
+}
+
+/* La barre de saisie seule */
+.search-input-group {
+    display: flex;
+    align-items: center;
+    background: #f3f4f6;
+    border-radius: 12px;
+    padding: 0 15px;
+    border: 1px solid var(--border-color);
+    transition: var(--transition);
+}
+
+.search-input-group:focus-within {
+    background: white;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+}
+
+.search-input-group input {
+    background: none;
+    border: none;
+    padding: 12px 10px;
+    outline: none;
+    width: 250px; /* Un peu plus large puisque le bouton est dehors */
+    font-size: 0.95rem;
+}
+
+.search-input-group i {
+    color: var(--text-muted);
+}
+
+/* Le bouton Rechercher à l'extérieur */
+.btn-search-external {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition);
+    white-space: nowrap; /* Évite que le texte ne passe à la ligne */
+}
+
+.btn-search-external:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+}
+
+.btn-search-external:active {
+    transform: translateY(0);
+}
+
+/* --- Page Profil --- */
+.profil-page {
+    padding-top: 3rem;
+    padding-bottom: 5rem;
+}
+
+/* En-tête du profil */
+.profil-header {
+    background: white;
+    border-radius: 20px;
+    padding: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border-color);
+    margin-bottom: 4rem;
+    animation: fadeInDown 0.6s ease-out;
+}
+
+.profil-avatar {
+    font-size: 5rem;
+    color: var(--primary-color);
+    line-height: 1;
+}
+
+.profil-info h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--text-main);
+    margin-bottom: 0.5rem;
+}
+
+.profil-email {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.badge-stat {
+    background: #eef2ff;
+    color: var(--primary-color);
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.btn-primary-small {
+    background: var(--primary-color);
+    color: white;
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.btn-primary-small:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+}
+
+/* Section Objets */
+.section-title-group {
+    margin-bottom: 2rem;
+}
+
+.section-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.title-underline {
+    width: 60px;
+    height: 4px;
+    background: var(--primary-color);
+    border-radius: 2px;
+    margin-top: 8px;
+}
+
+/* Cartes d'objets spécifiques au profil */
+.object-description {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.card-image-placeholder {
+    height: 150px;
+    background: #f3f4f6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    color: #d1d5db;
+}
+
+.btn-text {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* État vide */
+.empty-state {
+    text-align: center;
+    padding: 5rem;
+    background: white;
+    border-radius: 20px;
+    border: 2px dashed var(--border-color);
+}
+
+.empty-state i {
+    font-size: 4rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+    display: block;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .profil-header {
+        flex-direction: column;
+        text-align: center;
+        padding: 2rem;
+    }
+    .profil-actions {
+        width: 100%;
+    }
+}
+
+/* --- Formulaire d'Ajout d'Objet --- */
+.form-page {
+    padding: 4rem 0;
+    display: flex;
+    justify-content: center;
+}
+
+.form-card-wrapper {
+    width: 100%;
+    max-width: 700px; /* Plus large que le login pour être à l'aise */
+}
+
+/* On passe de 700px à 850px pour laisser respirer les 3 colonnes */
+.form-card-wrapper.wide {
+    max-width: 850px; 
+    width: 100%;
+}
+
+/* Optimisation de la grille du haut */
+.form-grid-top {
+    display: grid;
+    /* Le nom prend 2.5 parts, la catégorie 1.5 part, le prix 1 part */
+    grid-template-columns: 2.5fr 1.5fr 1fr; 
+    gap: 25px; /* Plus d'espace entre les champs */
+    margin-bottom: 10px;
+}
+
+/* On s'assure que la carte prend bien toute la largeur du wrapper */
+.form-card-wrapper .auth-card {
+    max-width: 100%; 
+    padding: 3rem; /* Un peu plus de padding interne pour le confort */
+}
+
+/* Responsive : Sur tablette, on passe à 2 colonnes + 1 ligne pour le prix */
+@media (max-width: 850px) {
+    .form-grid-top {
+        grid-template-columns: 1fr 1fr;
+    }
+    /* Le prix prend toute la largeur sur la deuxième ligne en tablette */
+    .form-grid-top .input-group:last-child {
+        grid-column: span 2;
+    }
+}
+
+/* Sur mobile, tout en une seule colonne */
+@media (max-width: 500px) {
+    .form-grid-top {
+        grid-template-columns: 1fr;
+    }
+    .form-grid-top .input-group:last-child {
+        grid-column: span 1;
+    }
+}
+/* Gestion des 3 colonnes sur une ligne */
+.form-row-triple {
+    display: grid;
+    grid-template-columns: 2fr 1.5fr 1fr; /* Le nom prend plus de place, le prix moins */
+    gap: 15px;
+}
+
+/* On s'assure que le champ prix ne laisse pas apparaître les flèches moches du navigateur */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Responsive pour mobile : tout repasse en une seule colonne */
+@media (max-width: 768px) {
+    .form-row-triple {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Style spécifique pour le Select */
+.select-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.select-wrapper i {
+    position: absolute;
+    right: 15px;
+    pointer-events: none;
+    color: var(--text-muted);
+}
+
+.select-wrapper select {
+    appearance: none; /* Enlève la flèche par défaut de l'OS */
+    cursor: pointer;
+}
+
+/* Zone d'upload d'images moderne */
+.file-drop-area {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
-    background-color: #f0f0f0;
-}
-
-.box {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.row {
-    text-align: center;
-}
-
-/* Personnalisation de l'input file */
-#img::file-selector-button {
-    background-color: #0d6efd;
-    /* Bleu Bootstrap */
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 8px 16px;
-    margin-right: 20px;
-    transition: 0.3s;
+    padding: 2rem;
+    border: 2px dashed var(--border-color);
+    border-radius: 12px;
+    background: #f9fafb;
+    transition: var(--transition);
     cursor: pointer;
 }
 
-#img::file-selector-button:hover {
-    background-color: #0a58ca;
+.file-drop-area:hover {
+    border-color: var(--primary-color);
+    background: #f5f7ff;
 }
 
-/* Style pour la bordure du champ */
-#img.form-control {
-    padding: 20px;
-    border: 2px dashed #dee2e6;
-    /* Bordure pointillée style "upload" */
-    background-color: #f8f9fa;
+.file-drop-area i {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 10px;
 }
 
-#img.form-control:focus {
-    border-color: #0d6efd;
-    box-shadow: none;
+.file-msg {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.file-input {
+    position: absolute;
+    left: 0; top: 0; width: 100%; height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.input-hint {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 8px;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+}
+
+/* --- Décoration Avancée des Formulaires --- */
+
+/* Style de base pour Inputs, Textarea et Select */
+.auth-input {
+    width: 100%;
+    padding: 0.9rem 1.2rem;
+    border: 2px solid #e5e7eb; /* Couleur de bordure douce */
+    border-radius: 12px;
+    background-color: #ffffff;
+    font-size: 1rem;
+    color: var(--text-main);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+}
+
+/* État au survol */
+.auth-input:hover {
+    border-color: #cbd5e1;
+}
+
+/* État au Focus (quand on clique dedans) */
+.auth-input:focus {
+    border-color: var(--primary-color);
     background-color: #fff;
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+    transform: translateY(-1px); /* Très léger soulèvement */
 }
 
-/* stats.php */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    margin: 0;
-    padding: 0;
+/* Style spécifique pour le Textarea */
+textarea.auth-input {
+    resize: none; /* Empêche l'utilisateur de déformer le design */
+    line-height: 1.5;
 }
 
-main {
+/* Placeholder (le texte indicatif) */
+.auth-input::placeholder {
+    color: #9ca3af;
+    font-size: 0.95rem;
+}
+
+/* Animation des labels au focus du champ parent */
+.input-group:focus-within .auth-label {
+    color: var(--primary-color);
+    transform: translateX(4px);
+}
+
+.auth-label {
+    transition: all 0.3s ease;
+}
+
+/* Animation du bouton Succès */
+.auth-btn.success {
+    background-color: #10b981 !important; /* Vert émeraude */
+    pointer-events: none;
+}
+
+@keyframes scaleCheck {
+    0% { transform: scale(0); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.check-icon {
+    display: inline-block;
+    animation: scaleCheck 0.4s ease-out forwards;
+}
+
+/* On s'assure que les champs ont un style cohérent même en erreur */
+.auth-input:invalid:not(:placeholder-shown) {
+    border-color: #ef4444;
+}
+
+/* --- Page Fiche Produit --- */
+.product-page { padding: 2rem 0 5rem; }
+
+.retour-link { margin-bottom: 2rem; }
+.retour-link a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+}
+.retour-link a:hover { color: var(--primary-color); }
+
+.product-layout {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 30px;
+    align-items: start;
+}
+
+.product-card {
+    background: white;
+    border-radius: 20px;
+    padding: 2.5rem;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.category-badge {
+    background: #eef2ff;
+    color: var(--primary-color);
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.product-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-top: 1rem;
+    color: var(--text-main);
+}
+
+.product-gallery { margin: 2rem 0; border-radius: 15px; overflow: hidden; }
+.main-image { width: 100%; height: 450px; object-fit: cover; }
+
+.product-details h3 { margin-bottom: 1rem; font-size: 1.2rem; }
+.description { color: var(--text-muted); line-height: 1.7; font-size: 1.1rem; }
+
+/* Sidebar Action */
+.action-card {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 100px;
+}
+
+.price-section .label { color: var(--text-muted); font-size: 0.9rem; }
+.price-section .price {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--primary-color);
+}
+
+.divider { height: 1px; background: var(--border-color); margin: 1.5rem 0; }
+
+.exchange-container { display: flex; flex-direction: column; gap: 15px; }
+
+/* Style du select injecté */
+#select-existant {
+    width: 100%;
+    padding: 10px;
+    border-radius: 12px;
+    border: 2px solid var(--primary-color);
+    font-family: inherit;
+    outline: none;
+    animation: fadeInDown 0.3s ease-out;
+}
+
+.security-note {
+    margin-top: 1.5rem;
+    font-size: 0.8rem;
+    color: #10b981;
     display: flex;
-    justify-content: center;
     align-items: center;
-    height: 100vh;
+    justify-content: center;
+    gap: 5px;
 }
-section {
-    background-color: #fff;
-    padding: 40px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    text-align: center;
+
+@media (max-width: 992px) {
+    .product-layout { grid-template-columns: 1fr; }
+    .action-card { position: static; }
 }

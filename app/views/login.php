@@ -1,59 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/assets/css/login.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <title>Troc&Co - Inscription</title>
+    <link rel="stylesheet" nonce="<?= Flight::get('csp_nonce') ?>" href="/assets/css/style.css">
 </head>
 
 <body>
-    <div class="container-fluid">
-        <div class="row vh-100">
-            <div class="fond col-md-6 col-sm-12">
-
+    <div class="login-container">
+        <div class="login-image-side">
+            <div class="login-overlay">
+                <h1>Rejoignez Troc&Co</h1>
+                <p>Échangez ce que vous avez contre ce dont vous avez besoin.</p>
             </div>
-            <div class="col-md-6 col-sm-12">
-                <div class="row justify-content-center g-4">
-                    <form method="POST" action="/user/create" class="bg-white p-4 mt-5">
-                        <h2 class="mb-4">Creer un compte</h2>
-                        <div class="mb-3">
-                            <label for="mail" class="form-label">Email*</label>
-                            <input type="mail" class="form-control" id="mail" name="email">
-                        </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Mot de passe*</label>
-                            <input type="password" class="form-control" id="password" name="password">
-                        </div>
-                        <div class="mb-3">
-                            <label for="username" class="form-label">Nom d'utilisateur*</label>
-                            <input type="text" class="form-control" id="username" name="nom">
-                        </div>
-                        <button type="submit" class="btn btn-dark text-white w-100">Valider</button>
-                    </form>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-md-6 col-sm-12">
-                        <div class="d-block">
-                            Vouz avez deja un compte ? <a href="/user/connect">Se connecter</a>
-                        </div>
+        </div>
+
+        <div class="login-form-side">
+            <div class="auth-card">
+                <form method="POST" action="/user/create" class="signup-form">
+                    <h2 class="auth-title">Créer un compte</h2>
+                    <p class="auth-subtitle">C'est gratuit et ça le restera toujours.</p>
+
+                    <div class="input-group">
+                        <label class="auth-label">Email*</label>
+                        <input type="email" name="email" class="auth-input" placeholder="votre@email.com" required>
                     </div>
+
+                    <div class="input-group">
+                        <label class="auth-label">Nom d'utilisateur*</label>
+                        <input type="text" name="nom" class="auth-input" placeholder="Ex: JeanD" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label class="auth-label">Mot de passe*</label>
+                        <input type="password" name="password" class="auth-input" placeholder="••••••••" required>
+                    </div>
+
+                    <button type="submit" class="auth-btn">Créer mon compte</button>
+                </form>
+
+                <div class="auth-footer">
+                    <span>Vous avez déjà un compte ?</span>
+                    <a href="/user/connect" class="auth-link">Se connecter</a>
                 </div>
             </div>
         </div>
     </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const map = {
-                nom: { input: "#nom", err: "#nomError" },
-                email: { input: "#email", err: "#emailError" },
-                password: { input: "#password", err: "#passwordError" }
-            };
-        });
-    </script>
+
+    <script nonce="<?= Flight::get('csp_nonce') ?>" src="/assets/js/script.js"></script>
+    <script nonce="<?= Flight::get('csp_nonce') ?>" src="/assets/js/validation.js"></script>
+
 </body>
 
 </html>

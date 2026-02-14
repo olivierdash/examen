@@ -83,12 +83,18 @@ class User
         $nom = $data->nom;
         $email = $data->email;
         $mdp = $data->password;
+        
         $hashedMdp = password_hash($mdp, PASSWORD_DEFAULT);
-        if(! $this->ifUserExist($nom, $hashedMdp)){
+        
+        // Note: ifUserExist renvoie un tableau ['status' => bool]
+        if(! $this->ifUserExist($nom, $mdp, "User")['status']){
             $this->create($nom, $email, $mdp);
         }
+        
         $o = new Objet();
-        Flight::render('home', ['objets' => $o->getAll(), 'categories' => Categorie::getAll() ]);
+        // Rendu avec MODELE
+        Flight::render('home', ['objets' => $o->getAll(), 'categories' => Categorie::getAll()], 'content');
+        Flight::render('modele', ['title' => 'Accueil']);
     }
 
     private function ifUserExist($nom, $password, string $tablename){
@@ -110,30 +116,42 @@ class User
         $data = Flight::request()->data;
         $nom = $data->nom;
         $mdp = $data->password;
+        
+        // Test Admin/Manager
         $temp = $this->ifUserExist($nom, $mdp, "Manager");
         if($temp['status']){
             $param = "category";
-            Flight::render('admin/home', ['p' => $param, 'categories' => Categorie::getAll()]);
+            Flight::render('admin/home', ['p' => $param, 'categories' => Categorie::getAll()], 'content');
+            Flight::render('modele', ['title' => 'Dashboard Admin']);
             return;
         }
         
+        // Test Simple User
         $temp = $this->ifUserExist($nom, $mdp, "User");
-
         if($temp['status']){
             $_SESSION['user_id'] = $temp['id'];
             $o = new Objet(); 
-            Flight::render('home', ['objets' => $o->getAll(), 'categories' => Categorie::getAll() ]);
+            Flight::render('home', ['objets' => $o->getAll(), 'categories' => Categorie::getAll()], 'content');
+            Flight::render('modele', ['title' => 'Accueil']);
             return;
         }
-        Flight::render('connect');
+
+        // Si échec, retour à la connexion (on peut aussi passer le layout ici ou pas)
+        Flight::render('connect', [], 'content');
+        Flight::render('modele', ['title' => 'Connexion échouée']);
     }
 
     public function renderProfil(){
-        $id = $_SESSION['user_id'];
+        $id = $_SESSION['user_id'] ?? null;
+        if(!$id) { Flight::redirect('/user/connect'); return; }
+
         $u = $this->getById($id);
         $o = new Objet();
         $objs = $o->getByUser($id);
-        Flight::render('users/profil/profil', ['user' => $u, 'objets' => $objs]);
+
+        // Injection dans le layout modele.php
+        Flight::render('users/profil/profil', ['user' => $u, 'objets' => $objs], 'content');
+        Flight::render('modele', ['title' => 'Mon Profil - ' . $u['Nom']]);
     }
 
     // --- READ (Lire tout ou un seul) ---
