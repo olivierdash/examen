@@ -40,6 +40,8 @@
             let select = document.createElement('select');
             select.id = 'select-existant';
 
+            select.multiple = true;
+
             mesObjets.forEach(Objet => {
                 let option = document.createElement('option');
                 option.value = Objet.ID; // Utilise bien les majuscules selon ton var_dump
