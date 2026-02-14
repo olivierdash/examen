@@ -76,6 +76,8 @@ class Objet
         $this->idCategorie = $idCategorie;
     }
 
+    
+
     public function getFiltered(){
         $data = Flight::request()->data;
         $title = $data->titre;

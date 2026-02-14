@@ -11,6 +11,9 @@
     <main>
         <section>
             <h1><?php echo $objet['Titre']; ?></h1>
+            <h2>Catégorie :
+                <?php echo $categorie['Nom']; ?>
+            </h2>
             <p><?php echo $objet['Description']; ?></p>
             <p>Prix : <?php echo $objet['Prix']; ?> €</p>
         </section>

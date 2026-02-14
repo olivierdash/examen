@@ -9,6 +9,7 @@ use app\controllers\ObjetController;
 use app\models\User;
 use app\models\Echanges;
 use app\models\Objet;
+use app\controllers\CategorieController;
 /** 
  * @var Router $router 
  * @var Engine $app
@@ -68,7 +69,8 @@ $router->group('', function (Router $router) use ($app) {
         $router->get('/fiche/@id', function ($id) use ($app) {
             $myObjects = ObjetController::getByUser($_SESSION['user_id'] ?? null);
             $objet = ObjetController::getById($id);
-            $app->render('obj/fiche/fiche', ['objet' => $objet, 'myObjects' => $myObjects]);
+            $categorie = CategorieController::getById($objet['IdCategorie']);
+            $app->render('obj/fiche/fiche', ['objet' => $objet, 'myObjects' => $myObjects, 'categorie' => $categorie]);
         });
         
         $router->post('/filtered_objet', [Objet::class, 'getFiltered']);

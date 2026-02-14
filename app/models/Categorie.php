@@ -1,7 +1,7 @@
 <?php
-    namespace app\Models;
-    use Flight;
-    use PDO;
+namespace app\Models;
+use Flight;
+use PDO;
 
 class Categorie
 {
@@ -10,7 +10,8 @@ class Categorie
     private $Description; // Ajouté selon votre schéma SQL
     private $db;
 
-    public function __construct($ID = null, $Nom = null, $Description = null) {
+    public function __construct($ID = null, $Nom = null, $Description = null)
+    {
         $this->ID = $ID;
         $this->Nom = $Nom;
         $this->Description = $Description;
@@ -18,21 +19,43 @@ class Categorie
     }
 
     // --- GETTERS & SETTERS ---
-    public function getId() { return $this->ID; }
-    public function setId($ID) { $this->ID = $ID; return $this; }
+    public function getId()
+    {
+        return $this->ID;
+    }
+    public function setId($ID)
+    {
+        $this->ID = $ID;
+        return $this;
+    }
 
-    public function getNom() { return $this->Nom; }
-    public function setNom($Nom) { $this->Nom = $Nom; return $this; }
+    public function getNom()
+    {
+        return $this->Nom;
+    }
+    public function setNom($Nom)
+    {
+        $this->Nom = $Nom;
+        return $this;
+    }
 
-    public function getDescription() { return $this->Description; }
-    public function setDescription($Description) { $this->Description = $Description; return $this; }
+    public function getDescription()
+    {
+        return $this->Description;
+    }
+    public function setDescription($Description)
+    {
+        $this->Description = $Description;
+        return $this;
+    }
 
     // --- MÉTHODES CRUD ---
 
     /**
      * Récupère toutes les catégories
      */
-    public static function getAll() {
+    public static function getAll()
+    {
         $db = Flight::db();
         $stmt = $db->query("SELECT * FROM Categorie");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -41,17 +64,18 @@ class Categorie
     /**
      * Récupère une catégorie par son ID
      */
-    public static function getById($ID) {
+    public static function getById($ID)
+    {
         $db = Flight::db();
         $stmt = $db->prepare("SELECT * FROM Categorie WHERE ID = ?");
         $stmt->execute([$ID]);
-        return $stmt->fetchObject(self::class);
+        return $stmt->fetch(PDO::FETCH_ASSOC); // Retourne un tableau associatif
     }
-
     /**
      * Insère ou met à jour la catégorie
      */
-    public function save() {
+    public function save()
+    {
         if ($this->ID) {
             // Update
             $stmt = $this->db->prepare("UPDATE Categorie SET Nom = ?, Description = ? WHERE ID = ?");
@@ -68,7 +92,8 @@ class Categorie
     /**
      * Supprime la catégorie
      */
-    public function delete() {
+    public function delete()
+    {
         if ($this->ID) {
             $stmt = $this->db->prepare("DELETE FROM Categorie WHERE ID = ?");
             return $stmt->execute([$this->ID]);
